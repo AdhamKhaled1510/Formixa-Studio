@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Formixa Studio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── SERVICES BODY ── */
+.services-body { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1f 0%, #0d0618 100%); }
+.services-body-inner { max-width: 1100px; margin: 0 auto; }
+
+.services-full-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
+
+.service-full-card {
+  border: 1px solid var(--c-border); border-radius: var(--radius);
+  padding: 2.5rem; background: rgba(255,255,255,0.025);
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+.service-full-card:hover { border-color: var(--c-border-hover); transform: translateY(-4px); background: rgba(124,111,255,0.04); }
+
+.service-full-icon {
+  width: 52px; height: 52px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(124,111,255,0.2);
+}
+.ic-purple { background: linear-gradient(135deg,rgba(124,111,255,0.22),rgba(36,99,235,0.1)); }
+.ic-blue   { background: linear-gradient(135deg,rgba(36,99,235,0.22),rgba(8,145,178,0.1)); }
+.ic-teal   { background: linear-gradient(135deg,rgba(8,145,178,0.22),rgba(124,111,255,0.1)); }
+.ic-violet { background: linear-gradient(135deg,rgba(99,60,210,0.22),rgba(8,145,178,0.1)); }
+
+.service-full-card h3 { font-family: var(--ff-display); font-size: 1.15rem; font-weight: 700; }
+.service-full-card p { font-size: 0.92rem; color: var(--c-muted); line-height: 1.78; flex: 1; }
+
+.service-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.service-features li {
+  font-size: 0.83rem; color: var(--c-muted);
+  padding-left: 1.1rem; position: relative;
+}
+.service-features li::before {
+  content: ''; position: absolute; left: 0; top: 7px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--c-accent); opacity: 0.6;
+}
+
+/* ── PROCESS ── */
+.process { padding: 6rem 4rem; background: var(--c-bg); }
+.process-inner { max-width: 1100px; margin: 0 auto; }
+.process h2 { font-family: var(--ff-display); font-size: clamp(1.6rem,2.5vw,2.2rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 3rem; }
+.process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+.process-step { position: relative; padding: 2rem 2rem 2rem 0; }
+.process-step:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 2.5rem;
+  width: 1px; height: calc(100% - 4rem);
+  background: linear-gradient(to bottom, var(--c-border), transparent);
+}
+.step-num {
+  font-family: var(--ff-display); font-size: 3rem; font-weight: 800;
+  color: rgba(124,111,255,0.15); letter-spacing: -0.05em; line-height: 1;
+  margin-bottom: 1rem;
+}
+.process-step h3 { font-family: var(--ff-display); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+.process-step p { font-size: 0.84rem; color: var(--c-muted); line-height: 1.7; }
+
+/* ── PRICING ── */
+.pricing { padding: 6rem 4rem; background: linear-gradient(180deg, #0d0618 0%, #050d1f 100%); }
+.pricing-inner { max-width: 1100px; margin: 0 auto; }
+.pricing h2 { font-family: var(--ff-display); font-size: clamp(1.6rem,2.5vw,2.2rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 3rem; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+
+.pricing-card {
+  border: 1px solid var(--c-border); border-radius: var(--radius);
+  padding: 2.5rem; background: rgba(255,255,255,0.025);
+  display: flex; flex-direction: column; gap: 1.5rem;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.pricing-card:hover { transform: translateY(-4px); border-color: var(--c-border-hover); }
+.pricing-card.featured {
+  border-color: rgba(124,111,255,0.4); background: rgba(124,111,255,0.06);
+  position: relative;
+}
+.featured-badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(130deg,#5035cc,#2463eb);
+  color: #fff; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+  padding: 4px 16px; border-radius: 100px;
+}
+.pricing-tier { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); }
+.pricing-price { font-family: var(--ff-display); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+.pricing-price span { font-size: 1rem; font-weight: 400; color: var(--c-muted); }
+.pricing-desc { font-size: 0.88rem; color: var(--c-muted); line-height: 1.6; }
+.pricing-divider { height: 1px; background: var(--c-border); }
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.pricing-features li { font-size: 0.86rem; color: var(--c-muted); display: flex; gap: 8px; align-items: flex-start; }
+.pricing-features li::before { content: '✓'; color: var(--c-accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+.pricing-card .btn-primary, .pricing-card .btn-outline { text-align: center; justify-content: center; }
+
+@media (max-width: 900px) {
+  .services-body { padding: 5rem 2rem; }
+  .services-full-grid { grid-template-columns: 1fr; }
+  .process { padding: 5rem 2rem; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-step::after { display: none; }
+  .pricing { padding: 5rem 2rem; }
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 580px) {
+  .process-steps { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Formixa<em>.</em>Studio</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-line"></div>
+  <div class="page-header-content">
+    <div class="page-eyebrow">What we do</div>
+    <h1>Services Crafted for<br>Every Dimension</h1>
+    <p>From concept sketches to photorealistic renders, we offer end-to-end 3D design services tailored to your project's demands.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES GRID -->
+<section class="services-body">
+  <div class="services-body-inner">
+    <p class="section-label" style="margin-bottom:2.5rem;">Our capabilities</p>
+    <div class="services-full-grid fade-up">
+      <div class="service-full-card">
+        <div class="service-full-icon ic-purple">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="#7c6fff" stroke-width="1.2"/><path d="M11 2v18M2 7l9 4 9-4" stroke="#7c6fff" stroke-width="1.2" stroke-opacity="0.5"/></svg>
+        </div>
+        <h3>3D Modeling & Sculpting</h3>
+        <p>Parametric and freeform 3D models built to exact tolerances. From industrial components to organic art forms, we translate ideas into precise digital geometry.</p>
+        <ul class="service-features">
+          <li>Parametric & NURBS modeling</li>
+          <li>Organic sculpting and retopology</li>
+          <li>CAD-ready export formats (STEP, OBJ, FBX)</li>
+          <li>Tolerance verification reports</li>
+        </ul>
+      </div>
+      <div class="service-full-card">
+        <div class="service-full-icon ic-blue">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#2463eb" stroke-width="1.2"/><path d="M7 11a4 4 0 0 1 8 0" stroke="#2463eb" stroke-width="1.2" stroke-linecap="round"/><circle cx="11" cy="11" r="2" fill="rgba(36,99,235,0.3)" stroke="#2463eb" stroke-width="1"/></svg>
+        </div>
+        <h3>Rendering & Visualization</h3>
+        <p>Photorealistic imagery and animations that bring your 3D assets to life — suitable for client presentations, marketing campaigns, and virtual production.</p>
+        <ul class="service-features">
+          <li>Studio & environment lighting setups</li>
+          <li>Material and texture authoring</li>
+          <li>Still renders up to 8K resolution</li>
+          <li>Animated walkthroughs & turntables</li>
+        </ul>
+      </div>
+      <div class="service-full-card">
+        <div class="service-full-icon ic-teal">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#0891b2" stroke-width="1.2"/><path d="M7 11h8M11 7v8" stroke="#0891b2" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Product Design & Prototyping</h3>
+        <p>We partner with product teams to design manufacturable geometries and create digital prototypes ready for 3D printing, CNC machining, or injection molding.</p>
+        <ul class="service-features">
+          <li>Design-for-manufacture (DFM) reviews</li>
+          <li>3D print-ready file preparation</li>
+          <li>Material & finish simulation</li>
+          <li>Iteration support across rounds</li>
+        </ul>
+      </div>
+      <div class="service-full-card">
+        <div class="service-full-icon ic-violet">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 6h14M4 11h10M4 16h6" stroke="#7c3aed" stroke-width="1.2" stroke-linecap="round"/><circle cx="18" cy="16" r="3" stroke="#7c3aed" stroke-width="1.2"/></svg>
+        </div>
+        <h3>Design Consultation</h3>
+        <p>Expert creative direction from concept to completion. We help you define the visual language of your project and ensure every design decision is purposeful.</p>
+        <ul class="service-features">
+          <li>Project scoping & creative briefs</li>
+          <li>Reference & moodboard development</li>
+          <li>Design system documentation</li>
+          <li>Ongoing creative advisory retainers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-inner">
+    <p class="section-label">How we work</p>
+    <h2>Our Design Process</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <h3>Discovery</h3>
+        <p>Deep-dive sessions to understand your goals, constraints, and creative ambitions.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <h3>Concepting</h3>
+        <p>Rapid sketching, moodboards, and early geometry explorations to align on direction.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <h3>Refinement</h3>
+        <p>Iterative modeling and rendering with structured client feedback rounds.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <h3>Delivery</h3>
+        <p>Final file handoff in every format you need, with documentation and support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="pricing-inner">
+    <p class="section-label">Investment</p>
+    <h2>Transparent Pricing</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">$1,800<span> /project</span></div>
+        <p class="pricing-desc">Ideal for single-asset projects and small product teams getting started with 3D.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Up to 3 models</li>
+          <li>2 revision rounds</li>
+          <li>Standard renders (4K)</li>
+          <li>7-day turnaround</li>
+        </ul>
+        <a href="contact.html" class="btn-outline">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="pricing-tier">Studio</div>
+        <div class="pricing-price">$4,500<span> /project</span></div>
+        <p class="pricing-desc">Full creative partnership for brands, agencies, and product companies with complex needs.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Unlimited models</li>
+          <li>4 revision rounds</li>
+          <li>Photorealistic renders (8K)</li>
+          <li>Animations included</li>
+          <li>Priority 5-day turnaround</li>
+        </ul>
+        <a href="contact.html" class="btn-primary">Get Started
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-price">Custom</div>
+        <p class="pricing-desc">Dedicated studio capacity, retainer agreements, and full design system integration.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Dedicated team allocation</li>
+          <li>Monthly retainer model</li>
+          <li>NDA & IP protection</li>
+          <li>On-site sessions available</li>
+          <li>24hr response SLA</li>
+        </ul>
+        <a href="contact.html" class="btn-outline">Let's Talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Formixa<em>.</em>Studio</div>
+  <ul class="footer-links">
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Formixa Studio. All rights reserved.</p>
+</footer>
+
+<script>
+  const h = document.getElementById('hamburger');
+  const n = document.getElementById('navLinks');
+  h.addEventListener('click', () => { h.classList.toggle('open'); n.classList.toggle('open'); });
+  n.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h.classList.remove('open'); n.classList.remove('open'); }));
+</script>
+</body>
+</html>
