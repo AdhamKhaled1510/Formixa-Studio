@@ -3,523 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formixa Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Formixa Studio — Precision 3D Design</title>
+<link rel="stylesheet" href="style.css">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 900px 700px at 50% 45%, #1e0a52 0%, transparent 62%),
+    radial-gradient(ellipse 600px 500px at 12% 70%, #061840 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 88% 22%, #110630 0%, transparent 55%),
+    radial-gradient(ellipse 380px 320px at 72% 82%, #04122a 0%, transparent 60%),
+    linear-gradient(155deg, #0d0618 0%, #0a0520 35%, #050d1f 70%, #0d0618 100%);
+}
+.hero-geo { position: absolute; inset: 0; pointer-events: none; }
+.hero-geo svg { width: 100%; height: 100%; }
+.blob {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+.blob-1 {
+  width: 560px; height: 560px; top: -140px; left: -140px;
+  background: radial-gradient(circle, rgba(99,60,210,0.2) 0%, transparent 70%);
+  animation: pulse 10s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width: 460px; height: 460px; bottom: -110px; right: -110px;
+  background: radial-gradient(circle, rgba(20,80,200,0.17) 0%, transparent 70%);
+  animation: pulse 13s ease-in-out infinite alternate-reverse;
+}
+.blob-3 {
+  width: 280px; height: 280px; top: 38%; right: 10%;
+  background: radial-gradient(circle, rgba(8,145,178,0.13) 0%, transparent 70%);
+  animation: pulse 8s ease-in-out infinite alternate;
+}
+@keyframes pulse {
+  0%   { transform: scale(1) translate(0,0); }
+  100% { transform: scale(1.1) translate(16px,10px); }
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 2rem; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--c-accent); margin-bottom: 1.4rem;
+  animation: fadeUp 0.9s ease both;
+}
+.hero-eyebrow::before,.hero-eyebrow::after {
+  content:''; display:block; width:26px; height:1px; background:var(--c-accent); opacity:0.5;
+}
+.hero h1 {
+  font-family: var(--ff-display); font-size: clamp(2.8rem,6.5vw,5rem);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+  color: #fff; margin-bottom: 1.5rem;
+  animation: fadeUp 0.9s 0.12s ease both;
+}
+.hero h1 .grad {
+  background: linear-gradient(105deg, #b4a0ff 0%, #6eb3ff 50%, #38e0f0 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub {
+  font-size: 1.05rem; font-weight: 300; color: var(--c-muted);
+  max-width: 500px; margin: 0 auto 2.8rem; line-height: 1.8;
+  animation: fadeUp 0.9s 0.22s ease both;
+}
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.9s 0.32s ease both; }
+.scroll-cue {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2); z-index: 2;
+}
+.scroll-line { width:1px; height:36px; background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent); animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.25} }
 
-  :root {
-    --purple-900: #0d0618;
-    --purple-800: #160b2e;
-    --purple-700: #1e0f42;
-    --blue-900: #020b1a;
-    --blue-700: #0a1c3a;
-    --blue-500: #0f3060;
-    --accent-blue: #2463eb;
-    --accent-violet: #7c3aed;
-    --accent-teal: #0891b2;
-    --text-light: #f0eeff;
-    --text-mid: #a89dc8;
-    --text-dark: #1a1028;
-    --border-dim: rgba(255,255,255,0.08);
-    --ff-display: 'Syne', sans-serif;
-    --ff-body: 'DM Sans', sans-serif;
-  }
+/* ── ABOUT STRIP ── */
+.about-strip {
+  padding: 6rem 4rem;
+  background: linear-gradient(180deg, #050d1f 0%, #0d0618 100%);
+}
+.about-strip-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; align-items: center;
+}
+.about-strip h2 {
+  font-family: var(--ff-display); font-size: clamp(1.8rem,3.2vw,2.8rem);
+  font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; margin-bottom: 0.6rem;
+}
+.about-strip h2 span { display: block; color: var(--c-muted); font-weight: 400; }
+.about-strip p { font-size: 0.98rem; font-weight: 300; color: var(--c-muted); line-height: 1.85; margin-bottom: 1.5rem; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.stat {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--c-border);
+  border-radius: 12px; padding: 1.2rem;
+}
+.stat-num { font-family: var(--ff-display); font-size: 1.9rem; font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.stat-num em { font-style: normal; color: var(--c-accent); }
+.stat-label { font-size: 0.78rem; color: var(--c-muted); margin-top: 4px; }
 
-  html { scroll-behavior: smooth; }
+/* ── SERVICES PREVIEW ── */
+.services-preview {
+  padding: 6rem 4rem;
+  background: var(--c-bg);
+}
+.services-preview-inner { max-width: 1100px; margin: 0 auto; }
+.section-head { margin-bottom: 3rem; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.section-head h2 { font-family: var(--ff-display); font-size: clamp(1.8rem,3vw,2.5rem); font-weight: 700; letter-spacing: -0.025em; }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.service-card {
+  background: rgba(255,255,255,0.025); border: 1px solid var(--c-border);
+  border-radius: var(--radius); padding: 2rem; cursor: pointer;
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  text-decoration: none; color: inherit; display: block;
+}
+.service-card:hover {
+  border-color: var(--c-border-hover); transform: translateY(-4px);
+  background: rgba(124,111,255,0.05);
+}
+.service-icon {
+  width: 44px; height: 44px; border-radius: 10px; margin-bottom: 1.2rem;
+  background: linear-gradient(135deg, rgba(124,111,255,0.2), rgba(36,99,235,0.1));
+  border: 1px solid rgba(124,111,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.service-card h3 { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+.service-card p { font-size: 0.88rem; color: var(--c-muted); line-height: 1.7; }
 
-  body {
-    font-family: var(--ff-body);
-    background: var(--purple-900);
-    color: var(--text-light);
-    overflow-x: hidden;
-  }
+/* ── CTA BAND ── */
+.cta-band {
+  padding: 6rem 4rem;
+  background: linear-gradient(135deg, #0f0830 0%, #061840 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-band::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 700px 400px at 50% 50%, rgba(124,111,255,0.12) 0%, transparent 60%);
+}
+.cta-band-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+.cta-band h2 { font-family: var(--ff-display); font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 1rem; }
+.cta-band p { font-size: 1rem; color: var(--c-muted); margin-bottom: 2.5rem; line-height: 1.7; }
+.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-  /* ── NAV ─────────────────────────────────── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 4rem;
-    background: rgba(13,6,24,0.75);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-bottom: 0.5px solid var(--border-dim);
-  }
-
-  .logo {
-    font-family: var(--ff-display);
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text-light);
-    text-decoration: none;
-  }
-  .logo span { color: #7c6fff; }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-family: var(--ff-body);
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--text-mid);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text-light); }
-
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 4px;
-  }
-  .nav-toggle span {
-    display: block;
-    width: 24px;
-    height: 1.5px;
-    background: var(--text-light);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  /* ── HERO ─────────────────────────────────── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 40%, #1a0a4a 0%, transparent 65%),
-      radial-gradient(ellipse 50% 40% at 20% 70%, #0a1c50 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 80% 30%, #0f0830 0%, transparent 55%),
-      linear-gradient(160deg, #0d0618 0%, #120824 40%, #050d1f 100%);
-  }
-
-  /* Geometric lines */
-  .hero-geo {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .hero-geo svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-  }
-
-  /* Floating orbs */
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    animation: drift 12s ease-in-out infinite alternate;
-  }
-  .orb-1 { width: 480px; height: 480px; background: rgba(99,60,210,0.25); top: -10%; left: -8%; animation-duration: 14s; }
-  .orb-2 { width: 360px; height: 360px; background: rgba(20,80,200,0.2); bottom: -5%; right: -5%; animation-duration: 10s; }
-  .orb-3 { width: 220px; height: 220px; background: rgba(8,145,178,0.15); top: 30%; right: 15%; animation-duration: 16s; }
-
-  @keyframes drift {
-    0%   { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(30px, 20px) scale(1.08); }
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 820px;
-    padding: 0 2rem;
-    animation: fadeUp 1s ease both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #7c6fff;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 1s 0.1s ease both;
-  }
-  .hero-eyebrow::before, .hero-eyebrow::after {
-    content: '';
-    display: block;
-    width: 28px;
-    height: 1px;
-    background: #7c6fff;
-    opacity: 0.6;
-  }
-
-  .hero h1 {
-    font-family: var(--ff-display);
-    font-size: clamp(2.4rem, 6vw, 4.6rem);
-    font-weight: 800;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    color: #fff;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 1s 0.2s ease both;
-  }
-  .hero h1 em {
-    font-style: normal;
-    background: linear-gradient(105deg, #a78bfa 10%, #60a5fa 55%, #22d3ee 90%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero p {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--text-mid);
-    max-width: 520px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.75;
-    animation: fadeUp 1s 0.3s ease both;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0.9rem 2.4rem;
-    background: linear-gradient(135deg, #4f35cc 0%, #2463eb 100%);
-    color: #fff;
-    font-family: var(--ff-body);
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    border: none;
-    border-radius: 100px;
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 30px rgba(79,53,204,0.4);
-    animation: fadeUp 1s 0.4s ease both;
-  }
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0);
-    transition: background 0.2s;
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 40px rgba(79,53,204,0.6); }
-  .btn-primary:hover::after { background: rgba(255,255,255,0.07); }
-  .btn-primary svg { transition: transform 0.2s; }
-  .btn-primary:hover svg { transform: translateX(3px); }
-
-  /* scroll indicator */
-  .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
-  .scroll-hint-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
-    animation: scrollLine 2s ease-in-out infinite;
-  }
-  @keyframes scrollLine {
-    0%,100% { transform: scaleY(1); opacity: 1; }
-    50%      { transform: scaleY(0.4); opacity: 0.4; }
-  }
-
-  /* ── PRECISION SECTION ─────────────────────── */
-  .precision {
-    padding: 7rem 4rem;
-    background: linear-gradient(180deg, #050d1f 0%, #0d0618 100%);
-    position: relative;
-  }
-  .precision::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(124,111,255,0.4), transparent);
-  }
-
-  .precision-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 5rem;
-    align-items: center;
-  }
-
-  .precision-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #7c6fff;
-    font-weight: 500;
-    margin-bottom: 1.2rem;
-  }
-
-  .precision h2 {
-    font-family: var(--ff-display);
-    font-size: clamp(1.9rem, 3.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -0.025em;
-    color: #fff;
-  }
-  .precision h2 span {
-    display: block;
-    color: var(--text-mid);
-    font-weight: 400;
-  }
-
-  .precision-right p {
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--text-mid);
-    line-height: 1.85;
-    margin-bottom: 1.5rem;
-  }
-
-  .precision-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-
-  .stat-card {
-    background: rgba(255,255,255,0.03);
-    border: 0.5px solid var(--border-dim);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .stat-card .stat-num {
-    font-family: var(--ff-display);
-    font-size: 2rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .stat-card .stat-num span { color: #7c6fff; }
-  .stat-card .stat-label {
-    font-size: 0.8rem;
-    color: var(--text-mid);
-    font-weight: 400;
-  }
-
-  /* ── GALLERY ───────────────────────────────── */
-  .gallery {
-    padding: 7rem 4rem;
-    background: var(--purple-900);
-    position: relative;
-  }
-  .gallery::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(36,99,235,0.35), transparent);
-  }
-
-  .gallery-header {
-    max-width: 1100px;
-    margin: 0 auto 3.5rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .gallery-header-left .section-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #7c6fff;
-    font-weight: 500;
-    margin-bottom: 1rem;
-  }
-  .gallery-header h2 {
-    font-family: var(--ff-display);
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.15;
-    color: #fff;
-    max-width: 480px;
-  }
-
-  .gallery-sub {
-    font-size: 0.9rem;
-    color: var(--text-mid);
-    max-width: 260px;
-    line-height: 1.7;
-  }
-
-  .gallery-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-  }
-
-  .gallery-card {
-    border-radius: 16px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.03);
-    border: 0.5px solid var(--border-dim);
-    aspect-ratio: 4/3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: border-color 0.3s, transform 0.3s;
-    cursor: pointer;
-  }
-  .gallery-card:hover {
-    border-color: rgba(124,111,255,0.35);
-    transform: translateY(-4px);
-  }
-  .gallery-card:hover .upload-icon { opacity: 0.8; }
-
-  .gallery-card-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 80% at 50% 100%, rgba(79,53,204,0.08) 0%, transparent 70%);
-  }
-
-  .upload-icon {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    opacity: 0.35;
-    transition: opacity 0.3s;
-  }
-  .upload-icon svg { width: 36px; height: 36px; }
-  .upload-icon p {
-    font-size: 0.8rem;
-    color: var(--text-mid);
-    text-align: center;
-    line-height: 1.4;
-  }
-
-  .gallery-card-num {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    font-family: var(--ff-display);
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.2);
-  }
-
-  /* ── FOOTER ───────────────────────────────── */
-  footer {
-    padding: 3rem 4rem;
-    border-top: 0.5px solid var(--border-dim);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    background: #080412;
-  }
-  .footer-logo {
-    font-family: var(--ff-display);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-light);
-    letter-spacing: -0.01em;
-  }
-  .footer-logo span { color: #7c6fff; }
-  footer p {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.25);
-  }
-
-  /* ── RESPONSIVE ─────────────────────────────── */
-  @media (max-width: 900px) {
-    nav { padding: 1.1rem 2rem; }
-    .nav-links { display: none; flex-direction: column; position: fixed; top: 60px; left: 0; right: 0; background: rgba(13,6,24,0.97); padding: 2rem; gap: 1.5rem; border-bottom: 0.5px solid var(--border-dim); }
-    .nav-links.open { display: flex; }
-    .nav-toggle { display: flex; }
-    .precision { padding: 5rem 2rem; }
-    .precision-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .gallery { padding: 5rem 2rem; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .gallery-header { flex-direction: column; align-items: flex-start; }
-    .gallery-sub { max-width: 100%; }
-    footer { padding: 2.5rem 2rem; }
-  }
-
-  @media (max-width: 600px) {
-    .gallery-grid { grid-template-columns: 1fr; }
-    .precision-stats { grid-template-columns: 1fr 1fr; }
-    footer { flex-direction: column; text-align: center; }
-  }
+@media (max-width: 900px) {
+  .about-strip { padding: 5rem 2rem; }
+  .about-strip-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .services-preview { padding: 5rem 2rem; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .cta-band { padding: 5rem 2rem; }
+  .section-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 580px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="#" class="logo">Formixa<span>.</span>Studio</a>
+  <a href="index.html" class="logo">Formixa<em>.</em>Studio</a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#">About us</a></li>
-    <li><a href="#">Contact</a></li>
-    <li><a href="#">Services</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
   </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -529,151 +181,132 @@
   <div class="hero-bg"></div>
   <div class="hero-geo">
     <svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- geometric grid lines -->
-      <line x1="0" y1="450" x2="1400" y2="450" stroke="rgba(124,111,255,0.18)" stroke-width="0.5"/>
-      <line x1="700" y1="0" x2="700" y2="900" stroke="rgba(124,111,255,0.12)" stroke-width="0.5"/>
-      <!-- diagonal lines -->
-      <line x1="0" y1="0" x2="700" y2="900" stroke="rgba(36,99,235,0.12)" stroke-width="0.5"/>
-      <line x1="1400" y1="0" x2="700" y2="900" stroke="rgba(36,99,235,0.12)" stroke-width="0.5"/>
-      <!-- concentric hexagons -->
-      <polygon points="700,100 1010,290 1010,670 700,860 390,670 390,290" stroke="rgba(124,111,255,0.12)" stroke-width="0.5"/>
-      <polygon points="700,200 920,325 920,575 700,700 480,575 480,325" stroke="rgba(36,99,235,0.1)" stroke-width="0.5"/>
-      <polygon points="700,300 830,375 830,520 700,590 570,520 570,375" stroke="rgba(8,145,178,0.1)" stroke-width="0.5"/>
-      <!-- corner accents -->
-      <rect x="60" y="60" width="80" height="80" stroke="rgba(124,111,255,0.2)" stroke-width="0.5" fill="none"/>
-      <rect x="70" y="70" width="60" height="60" stroke="rgba(124,111,255,0.1)" stroke-width="0.5" fill="none"/>
-      <rect x="1260" y="760" width="80" height="80" stroke="rgba(36,99,235,0.2)" stroke-width="0.5" fill="none"/>
-      <!-- dots grid -->
-      <circle cx="200" cy="200" r="1.5" fill="rgba(255,255,255,0.15)"/>
-      <circle cx="1200" cy="200" r="1.5" fill="rgba(255,255,255,0.15)"/>
-      <circle cx="200" cy="700" r="1.5" fill="rgba(255,255,255,0.15)"/>
-      <circle cx="1200" cy="700" r="1.5" fill="rgba(255,255,255,0.15)"/>
-      <circle cx="400" cy="150" r="1" fill="rgba(124,111,255,0.3)"/>
-      <circle cx="1000" cy="150" r="1" fill="rgba(124,111,255,0.3)"/>
+      <line x1="0" y1="450" x2="1400" y2="450" stroke="rgba(124,111,255,0.12)" stroke-width="0.5"/>
+      <line x1="700" y1="0" x2="700" y2="900" stroke="rgba(124,111,255,0.1)" stroke-width="0.5"/>
+      <line x1="0" y1="0" x2="700" y2="900" stroke="rgba(36,99,235,0.1)" stroke-width="0.5"/>
+      <line x1="1400" y1="0" x2="700" y2="900" stroke="rgba(36,99,235,0.1)" stroke-width="0.5"/>
+      <polygon points="700,80 1030,270 1030,680 700,870 370,680 370,270" stroke="rgba(124,111,255,0.1)" stroke-width="0.5"/>
+      <polygon points="700,190 930,315 930,580 700,700 470,580 470,315" stroke="rgba(36,99,235,0.08)" stroke-width="0.5"/>
+      <polygon points="700,295 840,370 840,525 700,600 560,525 560,370" stroke="rgba(8,145,178,0.08)" stroke-width="0.5"/>
+      <rect x="55" y="55" width="70" height="70" stroke="rgba(124,111,255,0.18)" stroke-width="0.5" fill="none"/>
+      <rect x="1275" y="775" width="70" height="70" stroke="rgba(36,99,235,0.15)" stroke-width="0.5" fill="none"/>
+      <circle cx="180" cy="180" r="1.5" fill="rgba(255,255,255,0.12)"/>
+      <circle cx="1220" cy="180" r="1.5" fill="rgba(255,255,255,0.12)"/>
+      <circle cx="180" cy="720" r="1.5" fill="rgba(255,255,255,0.12)"/>
+      <circle cx="1220" cy="720" r="1.5" fill="rgba(255,255,255,0.12)"/>
     </svg>
   </div>
-
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
 
   <div class="hero-content">
     <div class="hero-eyebrow">3D Design Studio</div>
-    <h1>Precision-Crafted<br><em>3D Designs</em></h1>
-    <p>We sculpt digital dimensions where structure meets imagination — every vertex placed with intent, every surface rendered with purpose.</p>
-    <a href="#precision" class="btn-primary">
-      Learn More
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <h1>Precision-Crafted<br><span class="grad">3D Designs</span></h1>
+    <p class="hero-sub">We sculpt digital dimensions where structure meets imagination — every vertex placed with intent, every surface rendered with purpose.</p>
+    <div class="hero-btns">
+      <a href="services.html" class="btn-primary">
+        Explore Services
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="about.html" class="btn-outline">Learn More</a>
+    </div>
   </div>
-
-  <div class="scroll-hint">
-    <div class="scroll-hint-line"></div>
-    Scroll
-  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div>Scroll</div>
 </section>
 
-<!-- PRECISION -->
-<section class="precision" id="precision">
-  <div class="precision-inner">
-    <div class="precision-left">
-      <p class="precision-label">Our philosophy</p>
-      <h2>
-        Commitment to Precision
-        <span>in 3D Design</span>
-      </h2>
+<div class="divider"></div>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip">
+  <div class="about-strip-inner">
+    <div>
+      <p class="section-label">Our philosophy</p>
+      <h2>Commitment to Precision <span>in 3D Design</span></h2>
     </div>
-    <div class="precision-right">
+    <div>
       <p>Every project that leaves our studio is a result of meticulous craftsmanship — from the initial wire-frame skeleton to the final rendered surface. We believe that precision is not a constraint but an instrument of creative freedom.</p>
-      <p>Our process fuses parametric modeling techniques with an artist's sensibility, producing forms that are structurally sound, geometrically elegant, and visually arresting across every medium and scale.</p>
-      <div class="precision-stats">
-        <div class="stat-card">
-          <div class="stat-num">240<span>+</span></div>
-          <div class="stat-label">Projects delivered</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">0.01<span>mm</span></div>
-          <div class="stat-label">Design tolerance</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">98<span>%</span></div>
-          <div class="stat-label">Client satisfaction</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">12<span>+</span></div>
-          <div class="stat-label">Years of expertise</div>
-        </div>
+      <p>Our process fuses parametric modeling with an artist's sensibility, producing forms that are structurally sound, geometrically elegant, and visually arresting.</p>
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-num">240<em>+</em></div><div class="stat-label">Projects delivered</div></div>
+        <div class="stat"><div class="stat-num">0.01<em>mm</em></div><div class="stat-label">Design tolerance</div></div>
+        <div class="stat"><div class="stat-num">98<em>%</em></div><div class="stat-label">Client satisfaction</div></div>
+        <div class="stat"><div class="stat-num">12<em>+</em></div><div class="stat-label">Years of expertise</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <div class="gallery-header">
-    <div class="gallery-header-left">
-      <p class="section-label">Connect with us</p>
-      <h2>Stay Connected on Professional Platforms</h2>
-    </div>
-    <p class="gallery-sub">Explore our featured works and follow our creative process across platforms.</p>
-  </div>
+<div class="divider"></div>
 
-  <div class="gallery-grid">
-    <div class="gallery-card">
-      <div class="gallery-card-bg"></div>
-      <div class="upload-icon">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="3" width="30" height="30" rx="6" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-          <path d="M12 22l4-4 4 4 4-6" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="13" cy="14" r="2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-        </svg>
-        <p>Image coming<br>soon</p>
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+  <div class="services-preview-inner">
+    <div class="section-head">
+      <div>
+        <p class="section-label">What we offer</p>
+        <h2>Our Core Services</h2>
       </div>
-      <span class="gallery-card-num">01</span>
+      <a href="services.html" class="btn-outline" style="white-space:nowrap;">All Services →</a>
     </div>
-    <div class="gallery-card">
-      <div class="gallery-card-bg"></div>
-      <div class="upload-icon">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="3" width="30" height="30" rx="6" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-          <path d="M12 22l4-4 4 4 4-6" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="13" cy="14" r="2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-        </svg>
-        <p>Image coming<br>soon</p>
-      </div>
-      <span class="gallery-card-num">02</span>
-    </div>
-    <div class="gallery-card">
-      <div class="gallery-card-bg"></div>
-      <div class="upload-icon">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="3" width="30" height="30" rx="6" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-          <path d="M12 22l4-4 4 4 4-6" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="13" cy="14" r="2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-        </svg>
-        <p>Image coming<br>soon</p>
-      </div>
-      <span class="gallery-card-num">03</span>
+    <div class="services-grid">
+      <a href="services.html" class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V13L10 18L2 13V7L10 2Z" stroke="#7c6fff" stroke-width="1.2"/></svg>
+        </div>
+        <h3>3D Modeling</h3>
+        <p>Precision parametric models built to exact specifications for any industry or scale.</p>
+      </a>
+      <a href="services.html" class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#7c6fff" stroke-width="1.2"/><path d="M10 3v7l4 4" stroke="#7c6fff" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Rendering & Visualization</h3>
+        <p>Photorealistic renders and animations that bring your vision to life with stunning clarity.</p>
+      </a>
+      <a href="services.html" class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="#7c6fff" stroke-width="1.2"/><path d="M7 10h6M10 7v6" stroke="#7c6fff" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Design Consultation</h3>
+        <p>Expert guidance from concept to completion — we partner with you at every stage.</p>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-content">
+    <p class="section-label">Ready to start?</p>
+    <h2>Let's Build Something Extraordinary</h2>
+    <p>Whether you have a detailed brief or just a rough idea, we'd love to hear from you and explore what's possible together.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-primary">Get in Touch
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="about.html" class="btn-outline">About Us</a>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-logo">Formixa<span>.</span>Studio</div>
-  <p>&copy; 2026 Formixa Studio. All rights reserved.</p>
+  <div class="footer-logo">Formixa<em>.</em>Studio</div>
+  <ul class="footer-links">
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Formixa Studio. All rights reserved.</p>
 </footer>
 
 <script>
-  const toggle = document.getElementById('navToggle');
-  const links  = document.getElementById('navLinks');
-  toggle.addEventListener('click', () => links.classList.toggle('open'));
-
-  document.querySelectorAll('.nav-links a').forEach(a =>
-    a.addEventListener('click', () => links.classList.remove('open'))
-  );
+  const h = document.getElementById('hamburger');
+  const n = document.getElementById('navLinks');
+  h.addEventListener('click', () => { h.classList.toggle('open'); n.classList.toggle('open'); });
+  n.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h.classList.remove('open'); n.classList.remove('open'); }));
 </script>
 </body>
 </html>
