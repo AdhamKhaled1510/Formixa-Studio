@@ -1,109 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formixa Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formixa Studio</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0f0f0f;
-            color: white;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        header {
-            background: #111;
-            padding: 20px;
-            text-align: center;
-        }
+body {
+    font-family: 'Georgia', serif;
+    color: white;
+}
 
-        header h1 {
-            margin: 0;
-            color: #00ffd5;
-        }
+/* NAVBAR */
+nav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+}
 
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-        }
+nav h1 {
+    font-size: 22px;
+    font-weight: 400;
+}
 
-        .hero h2 {
-            font-size: 30px;
-        }
+nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #ddd;
+    font-size: 14px;
+}
 
-        .projects {
-            padding: 40px;
-        }
+/* HERO SECTION */
+.hero {
+    height: 100vh;
+    background: url("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe") no-repeat center/cover;
+    position: relative;
+}
 
-        .projects h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+/* Overlay عشان اللون الغامق */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+/* CONTENT */
+.content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-        .card {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
+    padding: 20px;
+}
 
-        .card:hover {
-            transform: scale(1.05);
-        }
+.content h2 {
+    font-size: 80px;
+    line-height: 1.1;
+    max-width: 900px;
+}
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #111;
-            margin-top: 40px;
-        }
-    </style>
+.content p {
+    margin-top: 20px;
+    color: #ccc;
+    font-size: 16px;
+}
+
+/* BUTTON */
+.btn {
+    margin-top: 40px;
+    padding: 18px 45px;
+    background: white;
+    color: black;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ddd;
+}
+</style>
+
 </head>
 
 <body>
 
-    <header>
-        <h1>Formixa Studio</h1>
-        <p>My 3D Portfolio</p>
-    </header>
+<nav>
+    <h1>Formixa Studio</h1>
 
-    <section class="hero">
-        <h2>Welcome 👋</h2>
-        <p>I create 3D designs and visual projects</p>
-    </section>
+    <div>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+</nav>
 
-    <section class="projects">
-        <h2>My Projects</h2>
-
-        <div class="grid">
-            <div class="card">
-                <h3>Project 1</h3>
-                <p>3D Model Description</p>
-            </div>
-
-            <div class="card">
-                <h3>Project 2</h3>
-                <p>3D Animation</p>
-            </div>
-
-            <div class="card">
-                <h3>Project 3</h3>
-                <p>Product Design</p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2026 Formixa Studio</p>
-    </footer>
+<section class="hero">
+    <div class="content">
+        <h2>Precision-Crafted 3D Designs</h2>
+        <p>Expertly crafted 3D designs that elevate your professional image and open doors to success</p>
+        <a href="#" class="btn">Learn More</a>
+    </div>
+</section>
 
 </body>
 </html>
