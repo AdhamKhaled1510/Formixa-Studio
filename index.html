@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formixa Studio</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0f0f0f;
+            color: white;
+        }
+
+        header {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #00ffd5;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+        }
+
+        .projects {
+            padding: 40px;
+        }
+
+        .projects h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Formixa Studio</h1>
+        <p>My 3D Portfolio</p>
+    </header>
+
+    <section class="hero">
+        <h2>Welcome 👋</h2>
+        <p>I create 3D designs and visual projects</p>
+    </section>
+
+    <section class="projects">
+        <h2>My Projects</h2>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Project 1</h3>
+                <p>3D Model Description</p>
+            </div>
+
+            <div class="card">
+                <h3>Project 2</h3>
+                <p>3D Animation</p>
+            </div>
+
+            <div class="card">
+                <h3>Project 3</h3>
+                <p>Product Design</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Formixa Studio</p>
+    </footer>
+
+</body>
+</html>
