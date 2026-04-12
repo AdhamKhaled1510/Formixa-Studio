@@ -13,9 +13,9 @@
   // 3. اعمل Email Template وحط فيه المتغيرات دي:
   //    {{from_name}}, {{from_email}}, {{service}}, {{budget}}, {{message}}
   // 4. استبدل القيم دي بتاعتك:
-  const EMAILJS_PUBLIC_KEY  = '1nNEM5L6MOpCAsb0F';   // من Account > API Keys
-  const EMAILJS_SERVICE_ID  = 'service_p1s5tdf';   // من Email Services
-  const EMAILJS_TEMPLATE_ID = 'template_hd381e7';  // من Email Templates
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // من Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // من Email Services
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // من Email Templates
   // ────────────────────────────────────────────────────────────
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 </script>
@@ -178,7 +178,7 @@ textarea { resize: vertical; min-height: 140px; }
           </div>
           <div>
             <div class="detail-label">Email</div>
-            <div class="detail-val">formixastudio@gmail.com</div>
+            <div class="detail-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c3a332e3135243d2f28293835331c3b313d3530723f3331">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="contact-detail">
@@ -246,6 +246,7 @@ textarea { resize: vertical; min-height: 140px; }
           <label for="budget">Project budget</label>
           <select id="budget">
             <option value="" disabled selected>Select a range...</option>
+            <option>Under $80</option>
             <option>$80</option>
             <option>$80 – $150</option>
             <option>$150+</option>
@@ -326,7 +327,7 @@ textarea { resize: vertical; min-height: 140px; }
   <p class="footer-copy">&copy; 2026 Formixa Studio. All rights reserved.</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const h = document.getElementById('hamburger');
   const n = document.getElementById('navLinks');
   h.addEventListener('click', () => { h.classList.toggle('open'); n.classList.toggle('open'); });
@@ -357,12 +358,13 @@ textarea { resize: vertical; min-height: 140px; }
 
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name : fname + ' ' + lname,
-        from_email: email,
-        service   : service || 'Not specified',
-        budget    : budget  || 'Not specified',
-        message   : message,
-        to_email  : 'formixastudio@gmail.com',
+        first_name : fname,
+        last_name  : lname,
+        email      : email,
+        service    : service || 'Not specified',
+        budget     : budget  || 'Not specified',
+        message    : message,
+        to_email   : 'formixastudio@gmail.com',
       });
 
       // Success
@@ -377,11 +379,4 @@ textarea { resize: vertical; min-height: 140px; }
     }
   });
 
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
-  });
-</script>
-<style>
-  @keyframes spin { to { transform: rotate(360deg); } }
-</style></body>
-</html>
+  do
