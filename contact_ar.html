@@ -108,7 +108,7 @@ textarea { resize: vertical; min-height: 140px; }
           </div>
           <div>
             <div class="detail-label">الإيميل</div>
-            <div class="detail-val">formixastudio@gmail.com</div>
+            <div class="detail-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04626b76696d7c65777071606d6b446369656d682a676b69">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="contact-detail">
@@ -173,8 +173,8 @@ textarea { resize: vertical; min-height: 140px; }
           <label for="budget">الميزانية</label>
           <select id="budget">
             <option value="" disabled selected>اختر نطاق...</option>
-            <option>أقل من 800 جنيه</option>
-            <option>1500 – 800 جنيه</option>
+            <option>800 جنيه</option>
+            <option>800 – 1500 جنيه</option>
             <option>أكثر من 1500 جنيه</option>
             <option>نتفاهم عليها</option>
           </select>
@@ -252,7 +252,7 @@ textarea { resize: vertical; min-height: 140px; }
   <p class="footer-copy">&copy; 2026 Formixa Studio. جميع الحقوق محفوظة.</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const h = document.getElementById('hamburger');
   const n = document.getElementById('navLinks');
   h.addEventListener('click', () => { h.classList.toggle('open'); n.classList.toggle('open'); });
@@ -273,12 +273,13 @@ textarea { resize: vertical; min-height: 140px; }
     btn.disabled = true;
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: fname + ' ' + lname,
-        from_email: email,
-        service: service || 'غير محدد',
-        budget: budget || 'غير محدد',
-        message: message,
-        to_email: 'formixastudio@gmail.com',
+        first_name: fname,
+        last_name : lname,
+        email     : email,
+        service   : service || 'غير محدد',
+        budget    : budget  || 'غير محدد',
+        message   : message,
+        to_email  : 'formixastudio@gmail.com',
       });
       this.style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
@@ -289,11 +290,3 @@ textarea { resize: vertical; min-height: 140px; }
       alert('في مشكلة في الإرسال، حاول تاني أو ابعت على formixastudio@gmail.com مباشرةً');
     }
   });
-
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
-  });
-</script>
-<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
-</body>
-</html>
