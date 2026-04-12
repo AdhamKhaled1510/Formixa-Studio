@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Formixa Studio</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ── EmailJS Config ──────────────────────────────────────────
+  // 1. روح على emailjs.com وعمل حساب مجاني
+  // 2. اعمل Email Service وربطه بـ Gmail بتاعك
+  // 3. اعمل Email Template وحط فيه المتغيرات دي:
+  //    {{from_name}}, {{from_email}}, {{service}}, {{budget}}, {{message}}
+  // 4. استبدل القيم دي بتاعتك:
+  const EMAILJS_PUBLIC_KEY  = '1nNEM5L6MOpCAsb0F';   // من Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'service_p1s5tdf';   // من Email Services
+  const EMAILJS_TEMPLATE_ID = 'template_hd381e7';  // من Email Templates
+  // ────────────────────────────────────────────────────────────
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+</script>
 <style>
 /* ── CONTACT BODY ── */
 .contact-body { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1a 0%, #07090f 100%); }
@@ -164,7 +178,7 @@ textarea { resize: vertical; min-height: 140px; }
           </div>
           <div>
             <div class="detail-label">Email</div>
-            <div class="detail-val">formixastudio@gmail.com</div>
+            <div class="detail-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f19100d1216071e0c0b0a1b16103f18121e1613511c1012">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="contact-detail">
@@ -201,7 +215,7 @@ textarea { resize: vertical; min-height: 140px; }
     <!-- FORM -->
     <div class="contact-form-wrap fade-up-1">
       <h3>Send Us a Message</h3>
-      <form id="contact-form" novalidate>
+      <form id="contactForm" novalidate>
         <div class="form-row">
           <div class="form-group">
             <label for="fname">First name</label>
@@ -232,9 +246,10 @@ textarea { resize: vertical; min-height: 140px; }
           <label for="budget">Project budget</label>
           <select id="budget">
             <option value="" disabled selected>Select a range...</option>
-            <option>$80</option>
-            <option>$80 – $150</option>
-            <option>$150</option>
+            <option>Under $2,000</option>
+            <option>$2,000 – $5,000</option>
+            <option>$5,000 – $15,000</option>
+            <option>$15,000+</option>
             <option>Let's discuss</option>
           </select>
         </div>
@@ -312,42 +327,62 @@ textarea { resize: vertical; min-height: 140px; }
   <p class="footer-copy">&copy; 2026 Formixa Studio. All rights reserved.</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const h = document.getElementById('hamburger');
   const n = document.getElementById('navLinks');
   h.addEventListener('click', () => { h.classList.toggle('open'); n.classList.toggle('open'); });
   n.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h.classList.remove('open'); n.classList.remove('open'); }));
 
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    this.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+
+    const btn = this.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+
+    // Validate
+    const fname   = document.getElementById('fname').value.trim();
+    const lname   = document.getElementById('lname').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    const budget  = document.getElementById('budget').value;
+    const message = document.getElementById('message').value.trim();
+
+    if (!fname || !email || !message) {
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    // Loading state
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg> Sending...';
+    btn.disabled = true;
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name : fname + ' ' + lname,
+        from_email: email,
+        service   : service || 'Not specified',
+        budget    : budget  || 'Not specified',
+        message   : message,
+        to_email  : 'formixastudio@gmail.com',
+      });
+
+      // Success
+      this.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or email us directly at formixastudio@gmail.com');
+    }
   });
 
   document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.parentElement;
-
---------------------------------------------------------------
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<script>
-  window.onload = function() {
-
-    // تشغيل EmailJS
-    emailjs.init("1nNEM5L6MOpCAsb0F");
-
-    // لما المستخدم يدوس Send
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      emailjs.sendForm('service_p1s5tdf', 'template_hd381e7', this)
-        .then(function() {
-          alert('Message sent successfully ✅');
-        }, function(error) {
-          alert('Failed to send ❌: ' + JSON.stringify(error));
-        });
-    });
-
-  };
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+  });
 </script>
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style></body>
+</html>t
