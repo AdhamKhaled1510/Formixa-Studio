@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة الأعمال — Formixa Studio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body { min-height: 100vh; }
+.login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse 800px 600px at 50% 40%, #0a2a4a 0%, transparent 65%), linear-gradient(180deg, #07090f 0%, #050d1a 100%); }
+.login-box { width: 100%; max-width: 380px; padding: 3rem 2.5rem; border: 1px solid var(--c-border); border-radius: 20px; background: rgba(255,255,255,0.03); text-align: center; }
+.login-box .logo { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+.login-box .logo em { font-style: normal; color: var(--c-accent); }
+.login-box p { color: var(--c-muted); font-size: 0.85rem; margin-bottom: 2rem; }
+.login-box input[type="password"] { width: 100%; padding: 0.85rem 1.1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--c-border); border-radius: 12px; color: var(--c-text); font-size: 0.95rem; font-family: var(--ff-body); outline: none; text-align: center; transition: border-color 0.2s; }
+.login-box input[type="password"]:focus { border-color: var(--c-accent); }
+.login-box .btn-primary { width: 100%; justify-content: center; padding: 0.9rem; }
+.login-error { color: #f87171; font-size: 0.8rem; margin-top: 0.8rem; display: none; }
+.admin-panel { display: none; }
+.admin-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(7,9,15,0.95); border-bottom: 1px solid var(--c-border); }
+.admin-nav .logo { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; }
+.admin-nav .logo em { font-style: normal; color: var(--c-accent); }
+.admin-badge { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25); padding: 3px 12px; border-radius: 100px; }
+.logout-btn { font-size: 0.78rem; color: var(--c-muted); background: none; border: none; cursor: pointer; font-family: var(--ff-body); transition: color 0.2s; }
+.logout-btn:hover { color: var(--c-text); }
+.admin-main { padding: 6rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
+.admin-header { margin-bottom: 2rem; }
+.admin-header h1 { font-family: var(--ff-display); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; }
+.admin-header p { color: var(--c-muted); font-size: 0.88rem; line-height: 1.7; }
+.how-to-box { background: rgba(56,189,248,0.05); border: 1px solid rgba(56,189,248,0.2); border-radius: 14px; padding: 1.5rem 1.8rem; margin-bottom: 2rem; }
+.how-to-box h3 { font-family: var(--ff-display); font-size: 0.95rem; font-weight: 600; color: var(--c-accent); margin-bottom: 0.8rem; }
+.how-to-box ol { padding-right: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.how-to-box li { font-size: 0.84rem; color: var(--c-muted); line-height: 1.7; }
+.how-to-box li strong { color: var(--c-text); }
+.code-chip { display: inline-block; background: rgba(255,255,255,0.07); border: 1px solid var(--c-border); border-radius: 5px; padding: 1px 8px; font-family: monospace; font-size: 0.78rem; color: var(--c-accent); direction: ltr; }
+.add-form { background: rgba(255,255,255,0.025); border: 1px solid var(--c-border); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; }
+.add-form h2 { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--c-accent); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field label { font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-muted); }
+.field input, .field select { background: rgba(255,255,255,0.04); border: 1px solid var(--c-border); border-radius: 10px; color: var(--c-text); font-family: var(--ff-body); font-size: 0.88rem; padding: 0.7rem 0.9rem; outline: none; transition: border-color 0.2s; width: 100%; direction: rtl; }
+.field input:focus, .field select:focus { border-color: var(--c-accent); }
+.field select option { background: #07090f; }
+.field .hint { font-size: 0.7rem; color: var(--c-muted); margin-top: 0.25rem; }
+.field .hint span { color: var(--c-accent); font-family: monospace; }
+.media-tabs { display: flex; border: 1px solid var(--c-border); border-radius: 10px; overflow: hidden; margin-bottom: 0.7rem; }
+.media-tab { flex: 1; padding: 0.55rem; text-align: center; cursor: pointer; font-size: 0.78rem; font-weight: 500; color: var(--c-muted); background: transparent; border: none; font-family: var(--ff-body); transition: all 0.2s; border-left: 1px solid var(--c-border); }
+.media-tab:last-child { border-left: none; }
+.media-tab.active { background: linear-gradient(130deg, rgba(14,165,233,0.18), rgba(99,102,241,0.18)); color: var(--c-accent); }
+.url-input { background: rgba(255,255,255,0.04); border: 1px solid var(--c-border); border-radius: 10px; color: var(--c-text); font-family: var(--ff-body); font-size: 0.88rem; padding: 0.7rem 0.9rem; outline: none; width: 100%; direction: ltr; transition: border-color 0.2s; }
+.url-input:focus { border-color: var(--c-accent); }
+.media-preview { margin-top: 0.7rem; width: 100%; height: 150px; border-radius: 8px; overflow: hidden; background: #0c0f1a; display: none; border: 1px solid var(--c-border); position: relative; }
+.media-preview img, .media-preview video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-preview .clear-btn { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.75); border: none; color: #fff; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
+.preview-error { display: none; align-items: center; justify-content: center; height: 100%; color: var(--c-muted); font-size: 0.8rem; flex-direction: column; gap: 0.4rem; }
+.add-btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.75rem 2rem; background: linear-gradient(130deg,#0ea5e9,#6366f1); color: #fff; font-family: var(--ff-body); font-size: 0.88rem; font-weight: 500; border: none; border-radius: 100px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 20px rgba(56,189,248,0.25); }
+.add-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 28px rgba(56,189,248,0.4); }
+.works-list-section h2 { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 1.2rem; color: var(--c-accent); }
+.empty-state { text-align: center; padding: 3rem; color: var(--c-muted); border: 1px dashed var(--c-border); border-radius: 12px; font-size: 0.88rem; }
+.works-admin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.work-admin-card { border: 1px solid var(--c-border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); transition: border-color 0.2s; }
+.work-admin-card:hover { border-color: var(--c-border-hover); }
+.work-admin-thumb { width: 100%; height: 160px; object-fit: cover; display: block; }
+.thumb-placeholder { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #0c0f1a; color: var(--c-muted); font-size: 0.75rem; flex-direction: column; gap: 0.5rem; }
+.work-admin-info { padding: 0.9rem; }
+.work-admin-info h3 { font-family: var(--ff-display); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.work-admin-info .tag { font-size: 0.65rem; color: var(--c-accent); text-transform: uppercase; letter-spacing: 0.1em; display: block; }
+.work-admin-info .path-chip { font-size: 0.65rem; color: var(--c-muted); font-family: monospace; direction: ltr; display: block; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.work-admin-actions { display: flex; gap: 0.5rem; padding: 0 0.9rem 0.9rem; }
+.del-btn { flex: 1; padding: 0.5rem; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: #f87171; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-family: var(--ff-body); transition: background 0.2s; }
+.del-btn:hover { background: rgba(248,113,113,0.2); }
+.move-btn { padding: 0.5rem 0.8rem; background: rgba(255,255,255,0.04); border: 1px solid var(--c-border); color: var(--c-muted); border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: var(--ff-body); transition: background 0.2s; }
+.move-btn:hover { background: rgba(255,255,255,0.08); color: var(--c-text); }
+.view-links { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+.view-link { display: inline-flex; align-items: center; gap: 6px; padding: 0.6rem 1.4rem; border: 1px solid var(--c-border); border-radius: 100px; color: var(--c-muted); font-size: 0.82rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+.view-link:hover { border-color: var(--c-accent); color: var(--c-text); }
+@media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } .works-admin-grid { grid-template-columns: 1fr 1fr; } .admin-main { padding: 5rem 1.2rem 3rem; } }
+@media (max-width: 480px) { .works-admin-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="logo">Formixa<em>.</em>Studio</div>
+    <p>صفحة إدارة الأعمال — خاصة بك أنت فقط</p>
+    <input type="password" id="pwInput" placeholder="كلمة السر" onkeydown="if(event.key==='Enter') tryLogin()">
+    <button class="btn-primary" onclick="tryLogin()">دخول <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M7 13l-6-6 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <p class="login-error" id="loginError">كلمة السر غلط، حاول تاني</p>
+  </div>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-nav">
+    <div class="logo">Formixa<em>.</em>Studio</div>
+    <span class="admin-badge">لوحة التحكم</span>
+    <button class="logout-btn" onclick="logout()">خروج ↩</button>
+  </div>
+
+  <div class="admin-main">
+    <div class="admin-header">
+      <h1>إدارة الأعمال</h1>
+      <p>أضف صورك عن طريق مسار الملف من GitHub، رابط خارجي، أو رابط يوتيوب.</p>
+    </div>
+
+    <div class="how-to-box">
+      <h3>📁 إزاي أضيف صورة من جهازي؟</h3>
+      <ol>
+        <li><strong>ارفع الصورة على GitHub</strong> — حطها في فولدر اسمه <span class="code-chip">images</span> جوه المشروع</li>
+        <li><strong>اكتب مسارها هنا:</strong> <span class="code-chip">images/اسم-الصورة.jpg</span></li>
+        <li>الصورة هتظهر في الموقع فوراً بدون أي حد للمساحة ✅</li>
+      </ol>
+    </div>
+
+    <div class="add-form">
+      <h2>＋ إضافة عمل جديد</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>عنوان العمل</label>
+          <input type="text" id="workTitle" placeholder="مثال: ريندر منتج عطر">
+        </div>
+        <div class="field">
+          <label>التصنيف</label>
+          <select id="workCategory">
+            <option value="visualization">تصوير ثلاثي الأبعاد</option>
+            <option value="advertising">ريندر إعلاني</option>
+            <option value="scene">مشهد إبداعي</option>
+            <option value="video">فيديو / موشن</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:1rem;">
+        <label>مصدر الصورة / الفيديو</label>
+        <div class="media-tabs">
+          <button class="media-tab active" onclick="switchTab('path')"    id="tabPath">📁 مسار GitHub</button>
+          <button class="media-tab"        onclick="switchTab('url')"     id="tabUrl">🔗 رابط URL</button>
+          <button class="media-tab"        onclick="switchTab('youtube')" id="tabYoutube">▶ يوتيوب</button>
+        </div>
+
+        <div id="panelPath">
+          <input class="url-input" type="text" id="imgPath" placeholder="images/product1.jpg" oninput="previewSrc()">
+          <p class="hint" style="font-size:0.7rem;color:var(--c-muted);margin-top:0.3rem;">ارفع الصورة في فولدر <span style="color:var(--c-accent);font-family:monospace;">images/</span> على GitHub ثم اكتب اسمها هنا</p>
+        </div>
+        <div id="panelUrl" style="display:none;">
+          <input class="url-input" type="url" id="mediaUrl" placeholder="https://example.com/image.jpg" oninput="previewSrc()">
+        </div>
+        <div id="panelYoutube" style="display:none;">
+          <input class="url-input" type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+          <p class="hint" style="font-size:0.7rem;color:var(--c-muted);margin-top:0.3rem;">الصورة المصغرة هتتجلب من يوتيوب تلقائياً</p>
+        </div>
+
+        <div class="media-preview" id="mediaPreview">
+          <button class="clear-btn" onclick="clearPreview()">✕</button>
+          <img id="previewImg" style="display:none;" onerror="this.style.display='none';document.getElementById('previewError').style.display='flex'">
+          <video id="previewVid" style="display:none;" muted autoplay loop playsinline></video>
+          <div class="preview-error" id="previewError">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            تأكد من المسار أو الرابط
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>الحجم في الـ Grid</label>
+          <select id="workSize">
+            <option value="">عادي</option>
+            <option value="tall">طويل (tall)</option>
+            <option value="wide">عريض (wide)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>وصف قصير (اختياري)</label>
+          <input type="text" id="workDesc" placeholder="وصف مختصر...">
+        </div>
+      </div>
+
+      <button class="add-btn" onclick="addWork()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        إضافة للأعمال
+      </button>
+    </div>
+
+    <div class="works-list-section">
+      <h2>أعمالك الحالية (<span id="worksCount">0</span>)</h2>
+      <div id="worksAdminGrid" class="works-admin-grid"></div>
+      <div id="emptyState" class="empty-state">لسه مضفتش أي أعمال — ابدأ بإضافة أول عمل فوق ↑</div>
+    </div>
+
+    <div class="view-links">
+      <a href="portfolio.html"    class="view-link" target="_blank">↗ Portfolio بالإنجليزي</a>
+      <a href="portfolio_ar.html" class="view-link" target="_blank">↗ Portfolio بالعربي</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = 'formixa2026';
+const STORAGE_KEY = 'formixa_portfolio_works';
+let activeTab = 'path';
+
+function tryLogin() {
+  if (document.getElementById('pwInput').value === ADMIN_PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    sessionStorage.setItem('fx_admin','1');
+    renderAdminGrid();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+function logout() { sessionStorage.removeItem('fx_admin'); location.reload(); }
+if (sessionStorage.getItem('fx_admin') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  renderAdminGrid();
+}
+
+function switchTab(tab) {
+  activeTab = tab;
+  ['path','url','youtube'].forEach(t => {
+    const c = t[0].toUpperCase() + t.slice(1);
+    document.getElementById('panel'+c).style.display = t===tab ? 'block' : 'none';
+    document.getElementById('tab'+c).classList.toggle('active', t===tab);
+  });
+  clearPreview();
+}
+
+function previewSrc() {
+  const src = activeTab === 'path'
+    ? document.getElementById('imgPath').value.trim()
+    : document.getElementById('mediaUrl').value.trim();
+  if (!src) { clearPreview(); return; }
+  const isVid = /\.(mp4|webm|ogg)(\?|$)/i.test(src);
+  const wrap = document.getElementById('mediaPreview');
+  const img  = document.getElementById('previewImg');
+  const vid  = document.getElementById('previewVid');
+  const err  = document.getElementById('previewError');
+  wrap.style.display = 'block';
+  img.style.display = vid.style.display = 'none';
+  err.style.display = 'none';
+  if (isVid) { vid.src = src; vid.style.display = 'block'; }
+  else       { img.src = src; img.style.display = 'block'; }
+}
+
+function clearPreview() {
+  document.getElementById('mediaPreview').style.display = 'none';
+  document.getElementById('previewImg').src = '';
+  document.getElementById('previewVid').src = '';
+  document.getElementById('previewError').style.display = 'none';
+}
+
+function getYoutubeId(url) {
+  const m = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function getWorks() { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); }
+function saveWorks(w) { localStorage.setItem(STORAGE_KEY, JSON.stringify(w)); }
+
+function addWork() {
+  const title    = document.getElementById('workTitle').value.trim();
+  const category = document.getElementById('workCategory').value;
+  const size     = document.getElementById('workSize').value;
+  const desc     = document.getElementById('workDesc').value.trim();
+  if (!title) { alert('اكتب عنوان العمل'); return; }
+
+  let type, url, embedUrl;
+  if (activeTab === 'path') {
+    url = document.getElementById('imgPath').value.trim();
+    if (!url) { alert('اكتب مسار الصورة'); return; }
+    type = /\.(mp4|webm|ogg)$/i.test(url) ? 'video' : 'image';
+  } else if (activeTab === 'url') {
+    url = document.getElementById('mediaUrl').value.trim();
+    if (!url) { alert('أدخل الرابط'); return; }
+    type = /\.(mp4|webm|ogg)(\?|$)/i.test(url) ? 'video' : 'image';
+  } else {
+    const raw = document.getElementById('youtubeUrl').value.trim();
+    const vid = getYoutubeId(raw);
+    if (!vid) { alert('رابط يوتيوب غلط'); return; }
+    type = 'youtube'; url = raw;
+    embedUrl = 'https://www.youtube.com/embed/' + vid;
+  }
+
+  const works = getWorks();
+  works.push({ id: Date.now(), title, category, type, url, embedUrl, desc, size });
+  saveWorks(works);
+  renderAdminGrid();
+
+  document.getElementById('workTitle').value = '';
+  document.getElementById('workDesc').value  = '';
+  document.getElementById('workSize').value  = '';
+  document.getElementById('imgPath').value   = '';
+  if (document.getElementById('mediaUrl'))   document.getElementById('mediaUrl').value   = '';
+  if (document.getElementById('youtubeUrl')) document.getElementById('youtubeUrl').value = '';
+  clearPreview();
+}
+
+function deleteWork(id) {
+  if (!confirm('تمسح العمل ده؟')) return;
+  saveWorks(getWorks().filter(w => w.id !== id));
+  renderAdminGrid();
+}
+
+function moveWork(id, dir) {
+  const works = getWorks();
+  const idx = works.findIndex(w => w.id === id);
+  if (dir==='up' && idx===0) return;
+  if (dir==='down' && idx===works.length-1) return;
+  const s = dir==='up' ? idx-1 : idx+1;
+  [works[idx],works[s]] = [works[s],works[idx]];
+  saveWorks(works);
+  renderAdminGrid();
+}
+
+function renderAdminGrid() {
+  const works = getWorks();
+  const grid  = document.getElementById('worksAdminGrid');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('worksCount').textContent = works.length;
+  if (!works.length) { grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  const cats = { visualization:'تصوير ثلاثي الأبعاد', advertising:'ريندر إعلاني', scene:'مشهد إبداعي', video:'فيديو / موشن' };
+  grid.innerHTML = works.map(w => {
+    let thumb = '';
+    if (w.type==='image')
+      thumb = `<img class="work-admin-thumb" src="${w.url}" onerror="this.outerHTML='<div class=thumb-placeholder><svg width=24 height=24 viewBox=\\'0 0 24 24\\' fill=none stroke=currentColor stroke-width=1.2 opacity=0.3><rect x=3 y=3 width=18 height=18 rx=2/></svg><span>تأكد من المسار</span></div>'">`;
+    else if (w.type==='video')
+      thumb = `<video class="work-admin-thumb" src="${w.url}" muted autoplay loop playsinline></video>`;
+    else if (w.type==='youtube')
+      thumb = `<iframe style="width:100%;height:160px;border:none;display:block" src="${w.embedUrl}" allowfullscreen></iframe>`;
+    else
+      thumb = `<div class="thumb-placeholder">لا يوجد معاينة</div>`;
+    return `<div class="work-admin-card">
+      ${thumb}
+      <div class="work-admin-info">
+        <h3>${w.title}</h3>
+        <span class="tag">${cats[w.category]||w.category}${w.size?' · '+w.size:''}</span>
+        <span class="path-chip">${w.url}</span>
+      </div>
+      <div class="work-admin-actions">
+        <button class="move-btn" onclick="moveWork(${w.id},'up')">↑</button>
+        <button class="move-btn" onclick="moveWork(${w.id},'down')">↓</button>
+        <button class="del-btn"  onclick="deleteWork(${w.id})">حذف</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
