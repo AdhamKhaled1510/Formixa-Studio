@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تواصل معنا — فورميكسا ستوديو</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  const EMAILJS_PUBLIC_KEY  = '1nNEM5L6MOpCAsb0F';
+  const EMAILJS_SERVICE_ID  = 'service_p1s5tdf';
+  const EMAILJS_TEMPLATE_ID = 'template_hd381e7';
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+</script>
 <style>
 .contact-body { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1a 0%, #07090f 100%); }
 .contact-body-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; direction: rtl; }
@@ -101,7 +108,7 @@ textarea { resize: vertical; min-height: 140px; }
           </div>
           <div>
             <div class="detail-label">الإيميل</div>
-            <div class="detail-val">formixastudio@gmail.com</div>
+            <div class="detail-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3f59504d5256475e4c4b4a5b56507f58525e5653115c5052">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="contact-detail">
@@ -250,17 +257,43 @@ textarea { resize: vertical; min-height: 140px; }
   const n = document.getElementById('navLinks');
   h.addEventListener('click', () => { h.classList.toggle('open'); n.classList.toggle('open'); });
   n.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h.classList.remove('open'); n.classList.remove('open'); }));
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
+
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    this.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+    const btn = this.querySelector('button[type="submit"]');
+    const originalHTML = btn.innerHTML;
+    const fname   = document.getElementById('fname').value.trim();
+    const lname   = document.getElementById('lname').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    const budget  = document.getElementById('budget').value;
+    const message = document.getElementById('message').value.trim();
+    if (!fname || !email || !message) { alert('من فضلك اكتب اسمك وإيميلك ورسالتك.'); return; }
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg> بيتبعت...';
+    btn.disabled = true;
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name: fname + ' ' + lname,
+        from_email: email,
+        service: service || 'غير محدد',
+        budget: budget || 'غير محدد',
+        message: message,
+        to_email: 'formixastudio@gmail.com',
+      });
+      this.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+      alert('في مشكلة في الإرسال، حاول تاني أو ابعت على formixastudio@gmail.com مباشرةً');
+    }
   });
+
   document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.parentElement;
-      item.classList.toggle('open');
-    });
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 </body>
 </html>
