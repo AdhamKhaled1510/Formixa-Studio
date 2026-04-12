@@ -327,13 +327,3 @@ textarea { resize: vertical; min-height: 140px; }
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
       const item = q.parentElement;
-
-      document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    emailjs.sendForm('service_p1s5tdf', 'template_hd381e7', this)
-      .then(function() {
-        alert('Message sent successfully!');
-      }, function(error) {
-        alert('Failed to send: ' + error);
-      });
-});
