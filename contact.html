@@ -334,14 +334,14 @@ textarea { resize: vertical; min-height: 140px; }
 <script>
   // تشغيل EmailJS
   (function () {
-    emailjs.init("YOUR_PUBLIC_KEY"); // حط الـ Public Key بتاعك هنا
+    emailjs.init("1nNEM5L6MOpCAsb0F"); // حط الـ Public Key بتاعك هنا
   })();
 
   // لما المستخدم يدوس Send
   document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    emailjs.sendForm('service_p1s5tdf', 'template_59ppd8a', this)
+    emailjs.sendForm('service_p1s5tdf', 'template_hd381e7', this)
       .then(function() {
         alert('Message sent successfully ✅');
       }, function(error) {
