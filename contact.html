@@ -13,9 +13,9 @@
   // 3. اعمل Email Template وحط فيه المتغيرات دي:
   //    {{from_name}}, {{from_email}}, {{service}}, {{budget}}, {{message}}
   // 4. استبدل القيم دي بتاعتك:
-  const EMAILJS_PUBLIC_KEY  = '1nNEM5L6MOpCAsb0F';   // من Account > API Keys
-  const EMAILJS_SERVICE_ID  = 'service_p1s5tdf';   // من Email Services
-  const EMAILJS_TEMPLATE_ID = 'template_hd381e7';  // من Email Templates
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // من Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // من Email Services
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // من Email Templates
   // ────────────────────────────────────────────────────────────
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 </script>
@@ -178,7 +178,7 @@ textarea { resize: vertical; min-height: 140px; }
           </div>
           <div>
             <div class="detail-label">Email</div>
-            <div class="detail-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f19100d1216071e0c0b0a1b16103f18121e1613511c1012">[email&#160;protected]</a></div>
+            <div class="detail-val">formixastudio@gmail.com</div>
           </div>
         </div>
         <div class="contact-detail">
@@ -246,10 +246,9 @@ textarea { resize: vertical; min-height: 140px; }
           <label for="budget">Project budget</label>
           <select id="budget">
             <option value="" disabled selected>Select a range...</option>
-            <option>Under $2,000</option>
-            <option>$2,000 – $5,000</option>
-            <option>$5,000 – $15,000</option>
-            <option>$15,000+</option>
+            <option>$80</option>
+            <option>$80 – $150</option>
+            <option>$150+</option>
             <option>Let's discuss</option>
           </select>
         </div>
@@ -385,4 +384,4 @@ textarea { resize: vertical; min-height: 140px; }
 <style>
   @keyframes spin { to { transform: rotate(360deg); } }
 </style></body>
-</html>t
+</html>
