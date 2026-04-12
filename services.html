@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="style.css">
 <style>
 /* ── SERVICES BODY ── */
-.services-body { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1f 0%, #0d0618 100%); }
+.services-body { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1a 0%, #07090f 100%); }
 .services-body-inner { max-width: 1100px; margin: 0 auto; }
 
 .services-full-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
@@ -25,10 +25,10 @@
   display: flex; align-items: center; justify-content: center;
   border: 1px solid rgba(124,111,255,0.2);
 }
-.ic-purple { background: linear-gradient(135deg,rgba(124,111,255,0.22),rgba(36,99,235,0.1)); }
-.ic-blue   { background: linear-gradient(135deg,rgba(36,99,235,0.22),rgba(8,145,178,0.1)); }
-.ic-teal   { background: linear-gradient(135deg,rgba(8,145,178,0.22),rgba(124,111,255,0.1)); }
-.ic-violet { background: linear-gradient(135deg,rgba(99,60,210,0.22),rgba(8,145,178,0.1)); }
+.ic-purple { background: linear-gradient(135deg,rgba(56,189,248,0.18),rgba(99,102,241,0.1)); }
+.ic-blue   { background: linear-gradient(135deg,rgba(99,102,241,0.22),rgba(56,189,248,0.1)); }
+.ic-teal   { background: linear-gradient(135deg,rgba(14,165,233,0.22),rgba(56,189,248,0.1)); }
+.ic-violet { background: linear-gradient(135deg,rgba(99,102,241,0.22),rgba(14,165,233,0.1)); }
 
 .service-full-card h3 { font-family: var(--ff-display); font-size: 1.15rem; font-weight: 700; }
 .service-full-card p { font-size: 0.92rem; color: var(--c-muted); line-height: 1.78; flex: 1; }
@@ -63,7 +63,7 @@
 .process-step p { font-size: 0.84rem; color: var(--c-muted); line-height: 1.7; }
 
 /* ── PRICING ── */
-.pricing { padding: 6rem 4rem; background: linear-gradient(180deg, #0d0618 0%, #050d1f 100%); }
+.pricing { padding: 6rem 4rem; background: linear-gradient(180deg, #07090f 0%, #050d1a 100%); }
 .pricing-inner { max-width: 1100px; margin: 0 auto; }
 .pricing h2 { font-family: var(--ff-display); font-size: clamp(1.6rem,2.5vw,2.2rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 3rem; }
 .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
@@ -81,7 +81,7 @@
 }
 .featured-badge {
   position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-  background: linear-gradient(130deg,#5035cc,#2463eb);
+  background: linear-gradient(130deg,#0ea5e9,#6366f1);
   color: #fff; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
   padding: 4px 16px; border-radius: 100px;
 }
@@ -119,6 +119,7 @@
     <li><a href="services.html" class="active">Services</a></li>
     <li><a href="contact.html" class="nav-cta">Contact</a></li>
   </ul>
+  <div class="lang-switch"><a href="services_ar.html" class="lang-btn">عربي</a><a href="services.html" class="lang-btn active">EN</a></div>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -140,57 +141,44 @@
 <section class="services-body">
   <div class="services-body-inner">
     <p class="section-label" style="margin-bottom:2.5rem;">Our capabilities</p>
-    <div class="services-full-grid fade-up">
+    <div class="services-full-grid fade-up" style="grid-template-columns: 1fr 1fr 1fr;">
       <div class="service-full-card">
         <div class="service-full-icon ic-purple">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="#7c6fff" stroke-width="1.2"/><path d="M11 2v18M2 7l9 4 9-4" stroke="#7c6fff" stroke-width="1.2" stroke-opacity="0.5"/></svg>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="#38bdf8" stroke-width="1.2"/><path d="M11 2v18M2 7l9 4 9-4" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.5"/></svg>
         </div>
-        <h3>3D Modeling & Sculpting</h3>
-        <p>Parametric and freeform 3D models built to exact tolerances. From industrial components to organic art forms, we translate ideas into precise digital geometry.</p>
+        <h3>3D Product Visualization</h3>
+        <p>Strikingly accurate 3D models of your products built to photorealistic standards — perfect for e-commerce, presentations, and digital catalogs.</p>
         <ul class="service-features">
-          <li>Parametric & NURBS modeling</li>
-          <li>Organic sculpting and retopology</li>
-          <li>CAD-ready export formats (STEP, OBJ, FBX)</li>
-          <li>Tolerance verification reports</li>
+          <li>High-detail product modeling</li>
+          <li>Material & texture authoring</li>
+          <li>Multiple angle renders</li>
+          <li>CAD-ready export formats</li>
         </ul>
       </div>
       <div class="service-full-card">
         <div class="service-full-icon ic-blue">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#2463eb" stroke-width="1.2"/><path d="M7 11a4 4 0 0 1 8 0" stroke="#2463eb" stroke-width="1.2" stroke-linecap="round"/><circle cx="11" cy="11" r="2" fill="rgba(36,99,235,0.3)" stroke="#2463eb" stroke-width="1"/></svg>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#6366f1" stroke-width="1.2"/><path d="M7 11a4 4 0 0 1 8 0" stroke="#6366f1" stroke-width="1.2" stroke-linecap="round"/><circle cx="11" cy="11" r="2" fill="rgba(99,102,241,0.3)" stroke="#6366f1" stroke-width="1"/></svg>
         </div>
-        <h3>Rendering & Visualization</h3>
-        <p>Photorealistic imagery and animations that bring your 3D assets to life — suitable for client presentations, marketing campaigns, and virtual production.</p>
+        <h3>Product Advertising Renders</h3>
+        <p>Campaign-ready renders crafted for ads, social media, and marketing materials — cinematic lighting and flawless composition every time.</p>
         <ul class="service-features">
-          <li>Studio & environment lighting setups</li>
-          <li>Material and texture authoring</li>
-          <li>Still renders up to 8K resolution</li>
-          <li>Animated walkthroughs & turntables</li>
+          <li>Studio & lifestyle lighting setups</li>
+          <li>Ad-ready compositions (4K/8K)</li>
+          <li>Social media format variants</li>
+          <li>Fast turnaround for campaigns</li>
         </ul>
       </div>
       <div class="service-full-card">
         <div class="service-full-icon ic-teal">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#0891b2" stroke-width="1.2"/><path d="M7 11h8M11 7v8" stroke="#0891b2" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#0ea5e9" stroke-width="1.2"/><path d="M7 11h8M11 7v8" stroke="#0ea5e9" stroke-width="1.2" stroke-linecap="round"/></svg>
         </div>
-        <h3>Product Design & Prototyping</h3>
-        <p>We partner with product teams to design manufacturable geometries and create digital prototypes ready for 3D printing, CNC machining, or injection molding.</p>
+        <h3>Creative Product Scenes</h3>
+        <p>Imaginative 3D environments built around your product — bold, eye-catching scenes that make your brand impossible to scroll past.</p>
         <ul class="service-features">
-          <li>Design-for-manufacture (DFM) reviews</li>
-          <li>3D print-ready file preparation</li>
-          <li>Material & finish simulation</li>
-          <li>Iteration support across rounds</li>
-        </ul>
-      </div>
-      <div class="service-full-card">
-        <div class="service-full-icon ic-violet">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 6h14M4 11h10M4 16h6" stroke="#7c3aed" stroke-width="1.2" stroke-linecap="round"/><circle cx="18" cy="16" r="3" stroke="#7c3aed" stroke-width="1.2"/></svg>
-        </div>
-        <h3>Design Consultation</h3>
-        <p>Expert creative direction from concept to completion. We help you define the visual language of your project and ensure every design decision is purposeful.</p>
-        <ul class="service-features">
-          <li>Project scoping & creative briefs</li>
-          <li>Reference & moodboard development</li>
-          <li>Design system documentation</li>
-          <li>Ongoing creative advisory retainers</li>
+          <li>Custom scene & environment design</li>
+          <li>Brand-aligned color storytelling</li>
+          <li>Animated scene variations</li>
+          <li>Hero visuals for landing pages</li>
         </ul>
       </div>
     </div>
@@ -238,46 +226,48 @@
     <h2>Transparent Pricing</h2>
     <div class="pricing-grid">
       <div class="pricing-card">
-        <div class="pricing-tier">Starter</div>
-        <div class="pricing-price">$1,800<span> /project</span></div>
-        <p class="pricing-desc">Ideal for single-asset projects and small product teams getting started with 3D.</p>
+        <div class="pricing-tier">Basic</div>
+        <div class="pricing-price">$80<span> /project</span></div>
+        <p class="pricing-desc" style="font-size:0.8rem;color:var(--c-accent);margin-bottom:0.2rem;">≈ 500 جنيه مصري</p>
+        <p class="pricing-desc">مثالي للمنتجات البسيطة والأعمال الصغيرة. Ideal for simple products and small businesses.</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-features">
-          <li>Up to 3 models</li>
-          <li>2 revision rounds</li>
-          <li>Standard renders (4K)</li>
-          <li>7-day turnaround</li>
+          <li>1 product model</li>
+          <li>2 render angles</li>
+          <li>Standard quality (4K)</li>
+          <li>5-day turnaround</li>
         </ul>
         <a href="contact.html" class="btn-outline">Get Started</a>
       </div>
       <div class="pricing-card featured">
         <div class="featured-badge">Most Popular</div>
-        <div class="pricing-tier">Studio</div>
-        <div class="pricing-price">$4,500<span> /project</span></div>
-        <p class="pricing-desc">Full creative partnership for brands, agencies, and product companies with complex needs.</p>
+        <div class="pricing-tier">Pro</div>
+        <div class="pricing-price">$150<span> /project</span></div>
+        <p class="pricing-desc" style="font-size:0.8rem;color:var(--c-accent);margin-bottom:0.2rem;">≈ 800 جنيه مصري</p>
+        <p class="pricing-desc">Full creative package for brands that want to stand out — cinematic renders & creative scenes.</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-features">
-          <li>Unlimited models</li>
-          <li>4 revision rounds</li>
+          <li>Up to 3 product models</li>
+          <li>Multiple angles + scene</li>
           <li>Photorealistic renders (8K)</li>
-          <li>Animations included</li>
-          <li>Priority 5-day turnaround</li>
+          <li>Social media formats</li>
+          <li>Priority 3-day turnaround</li>
         </ul>
         <a href="contact.html" class="btn-primary">Get Started
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
       <div class="pricing-card">
-        <div class="pricing-tier">Enterprise</div>
-        <div class="pricing-price">Custom</div>
-        <p class="pricing-desc">Dedicated studio capacity, retainer agreements, and full design system integration.</p>
+        <div class="pricing-tier">Custom</div>
+        <div class="pricing-price">بالتفاهم</div>
+        <p class="pricing-desc">للمشاريع الكبيرة أو المتعددة — نتفاهم على السعر حسب التفاصيل. Custom quote for larger or recurring projects.</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-features">
-          <li>Dedicated team allocation</li>
-          <li>Monthly retainer model</li>
-          <li>NDA & IP protection</li>
-          <li>On-site sessions available</li>
-          <li>24hr response SLA</li>
+          <li>Unlimited revisions</li>
+          <li>Multiple products / scenes</li>
+          <li>Full advertising pack</li>
+          <li>Flexible delivery timeline</li>
+          <li>Priority support</li>
         </ul>
         <a href="contact.html" class="btn-outline">Let's Talk</a>
       </div>
