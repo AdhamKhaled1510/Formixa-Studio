@@ -201,7 +201,7 @@ textarea { resize: vertical; min-height: 140px; }
     <!-- FORM -->
     <div class="contact-form-wrap fade-up-1">
       <h3>Send Us a Message</h3>
-      <form id="contactForm" novalidate>
+      <form id="contact-form" novalidate>
         <div class="form-row">
           <div class="form-group">
             <label for="fname">First name</label>
@@ -329,27 +329,23 @@ textarea { resize: vertical; min-height: 140px; }
       const item = q.parentElement;
 
 --------------------------------------------------------------
-  <script
-  type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-  (function () {
-    emailjs.init({
-      publicKey: 'YOUR_PUBLIC_KEY',
-    });
-  })();
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-      document.getElementById('contact-form').addEventListener('submit', function(e) {
+<script>
+  // تشغيل EmailJS
+  (function () {
+    emailjs.init("YOUR_PUBLIC_KEY"); // حط الـ Public Key بتاعك هنا
+  })();
+
+  // لما المستخدم يدوس Send
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
+
     emailjs.sendForm('service_p1s5tdf', 'template_59ppd8a', this)
       .then(function() {
-        alert('Message sent successfully!');
+        alert('Message sent successfully ✅');
       }, function(error) {
-        alert('Failed to send: ' + error);
+        alert('Failed to send ❌: ' + JSON.stringify(error));
       });
-});
-
-
-      
+  });
+</script>
