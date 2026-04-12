@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فورميكسا ستوديو — تصميم ثلاثي الأبعاد احترافي</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 900px 700px at 50% 45%, #0a2a4a 0%, transparent 62%),
+    radial-gradient(ellipse 600px 500px at 12% 70%, #060e28 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 88% 22%, #0c0f28 0%, transparent 55%),
+    linear-gradient(155deg, #07090f 0%, #080c18 35%, #050d1a 70%, #07090f 100%);
+}
+.hero-geo { position: absolute; inset: 0; pointer-events: none; }
+.hero-geo svg { width: 100%; height: 100%; }
+.blob { position: absolute; border-radius: 50%; pointer-events: none; }
+.blob-1 { width: 560px; height: 560px; top: -140px; left: -140px; background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%); animation: pulse 10s ease-in-out infinite alternate; }
+.blob-2 { width: 460px; height: 460px; bottom: -110px; right: -110px; background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%); animation: pulse 13s ease-in-out infinite alternate-reverse; }
+.blob-3 { width: 280px; height: 280px; top: 38%; right: 10%; background: radial-gradient(circle, rgba(14,165,233,0.1) 0%, transparent 70%); animation: pulse 8s ease-in-out infinite alternate; }
+@keyframes pulse { 0% { transform: scale(1) translate(0,0); } 100% { transform: scale(1.1) translate(16px,10px); } }
+.hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 2rem; direction: rtl; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; color: var(--c-accent); margin-bottom: 1.4rem; animation: fadeUp 0.9s ease both; }
+.hero-eyebrow::before,.hero-eyebrow::after { content:''; display:block; width:26px; height:1px; background:var(--c-accent); opacity:0.5; }
+.hero h1 { font-family: var(--ff-display); font-size: clamp(2.6rem,6vw,4.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.01em; color: #fff; margin-bottom: 1.5rem; animation: fadeUp 0.9s 0.12s ease both; }
+.hero h1 .grad { background: linear-gradient(105deg, #38bdf8 0%, #818cf8 50%, #c4b5fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 1.05rem; font-weight: 300; color: var(--c-muted); max-width: 500px; margin: 0 auto 2.8rem; line-height: 1.9; animation: fadeUp 0.9s 0.22s ease both; }
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.9s 0.32s ease both; }
+.scroll-cue { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 7px; font-size: 0.65rem; color: rgba(255,255,255,0.2); z-index: 2; }
+.scroll-line { width:1px; height:36px; background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent); animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.25} }
+
+/* ── ABOUT STRIP ── */
+.about-strip { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1a 0%, #07090f 100%); }
+.about-strip-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; align-items: center; direction: rtl; }
+.about-strip h2 { font-family: var(--ff-display); font-size: clamp(1.8rem,3.2vw,2.8rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 0.6rem; }
+.about-strip h2 span { display: block; color: var(--c-muted); font-weight: 400; }
+.about-strip p { font-size: 0.98rem; font-weight: 300; color: var(--c-muted); line-height: 1.9; margin-bottom: 1.5rem; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.stat { background: rgba(255,255,255,0.03); border: 1px solid var(--c-border); border-radius: 12px; padding: 1.2rem; }
+.stat-num { font-family: var(--ff-display); font-size: 1.9rem; font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.stat-num em { font-style: normal; color: var(--c-accent); }
+.stat-label { font-size: 0.78rem; color: var(--c-muted); margin-top: 4px; }
+
+/* ── SERVICES PREVIEW ── */
+.services-preview { padding: 6rem 4rem; background: var(--c-bg); }
+.services-preview-inner { max-width: 1100px; margin: 0 auto; }
+.section-head { margin-bottom: 3rem; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; direction: rtl; }
+.section-head h2 { font-family: var(--ff-display); font-size: clamp(1.8rem,3vw,2.5rem); font-weight: 700; }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.service-card { background: rgba(255,255,255,0.025); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 2rem; cursor: pointer; transition: border-color 0.3s, transform 0.3s, background 0.3s; text-decoration: none; color: inherit; display: block; direction: rtl; }
+.service-card:hover { border-color: var(--c-border-hover); transform: translateY(-4px); background: rgba(56,189,248,0.04); }
+.service-icon { width: 44px; height: 44px; border-radius: 10px; margin-bottom: 1.2rem; background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(99,102,241,0.1)); border: 1px solid rgba(56,189,248,0.2); display: flex; align-items: center; justify-content: center; }
+.service-card h3 { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+.service-card p { font-size: 0.88rem; color: var(--c-muted); line-height: 1.8; }
+
+/* ── PORTFOLIO PREVIEW ── */
+.portfolio-preview { padding: 6rem 4rem; background: linear-gradient(180deg, #07090f 0%, #050d1a 100%); }
+.portfolio-preview-inner { max-width: 1100px; margin: 0 auto; }
+.portfolio-preview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.preview-card { border: 1px solid var(--c-border); border-radius: var(--radius); overflow: hidden; background: rgba(255,255,255,0.02); transition: border-color 0.3s, transform 0.3s; text-decoration: none; color: inherit; display: block; }
+.preview-card:hover { border-color: var(--c-border-hover); transform: translateY(-5px); }
+.preview-media { width: 100%; height: 220px; overflow: hidden; background: #0c0f1a; }
+.preview-media img, .preview-media video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
+.preview-card:hover .preview-media img, .preview-card:hover .preview-media video { transform: scale(1.05); }
+.preview-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.6rem; color: var(--c-muted); }
+.preview-placeholder svg { opacity: 0.25; }
+.preview-placeholder span { font-size: 0.7rem; opacity: 0.4; }
+.preview-info { padding: 1.1rem 1.3rem 1.3rem; direction: rtl; }
+.preview-tag { font-size: 0.65rem; font-weight: 500; color: var(--c-accent); background: rgba(56,189,248,0.08); padding: 2px 9px; border-radius: 100px; border: 1px solid rgba(56,189,248,0.15); display: inline-block; margin-bottom: 0.5rem; }
+.preview-info h3 { font-family: var(--ff-display); font-size: 0.95rem; font-weight: 600; }
+
+/* ── CTA ── */
+.cta-band { padding: 6rem 4rem; background: linear-gradient(135deg, #070e22 0%, #060d1c 100%); text-align: center; position: relative; overflow: hidden; }
+.cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 700px 400px at 50% 50%, rgba(56,189,248,0.07) 0%, transparent 60%); }
+.cta-band-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; direction: rtl; }
+.cta-band h2 { font-family: var(--ff-display); font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 700; margin-bottom: 1rem; }
+.cta-band p { font-size: 1rem; color: var(--c-muted); margin-bottom: 2.5rem; line-height: 1.8; }
+.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .about-strip { padding: 5rem 2rem; }
+  .about-strip-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .services-preview { padding: 5rem 2rem; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .cta-band { padding: 5rem 2rem; }
+  .section-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 580px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index_ar.html" class="logo">Formixa<em>.</em>Studio</a>
+    <ul class="nav-links" id="navLinks">
+    <li><a href="index_ar.html" class="active">الرئيسية</a></li>
+    <li><a href="about_ar.html">من نحن</a></li>
+    <li><a href="services_ar.html">خدماتنا</a></li>
+    <li><a href="portfolio_ar.html">أعمالنا</a></li>
+    <li><a href="contact_ar.html" class="nav-cta">تواصل معنا</a></li>
+    <li class="lang-switch-mobile" style="display:none;"><a href="index.html" class="lang-btn">EN</a><a href="#" class="lang-btn active">عربي</a></li>  </ul>
+    <div class="lang-switch">
+    <a href="index.html" class="lang-btn">EN</a>
+    <a href="#" class="lang-btn active">عربي</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-geo">
+    <svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" fill="none">
+      <line x1="0" y1="450" x2="1400" y2="450" stroke="rgba(56,189,248,0.1)" stroke-width="0.5"/>
+      <line x1="700" y1="0" x2="700" y2="900" stroke="rgba(56,189,248,0.08)" stroke-width="0.5"/>
+      <polygon points="700,80 1030,270 1030,680 700,870 370,680 370,270" stroke="rgba(56,189,248,0.09)" stroke-width="0.5"/>
+      <polygon points="700,190 930,315 930,580 700,700 470,580 470,315" stroke="rgba(99,102,241,0.07)" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">ستوديو تصميم ثلاثي الأبعاد</div>
+    <h1>تصاميم ثلاثية الأبعاد<br><span class="grad">بدقة احترافية</span></h1>
+    <p class="hero-sub">نحول أفكارك إلى تصاميم ثلاثية الأبعاد مذهلة — كل سطح مُصوَّر بعناية، وكل تفصيلة توضع بنية وهدف.</p>
+    <div class="hero-btns">
+      <a href="services_ar.html" class="btn-primary">
+        اكتشف خدماتنا
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M7 13l-6-6 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="about_ar.html" class="btn-outline">من نحن</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div>انزل</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip">
+  <div class="about-strip-inner">
+    <div>
+      <p class="section-label">فلسفتنا</p>
+      <h2>التزام بالدقة <span>في التصميم ثلاثي الأبعاد</span></h2>
+    </div>
+    <div>
+      <p>فورميكسا ستوديو مشروع تصميم جديد انطلق عام 2026، مبني على شغف حقيقي بالتصميم ثلاثي الأبعاد. بدأت كفكرة وتحولت إلى استوديو متخصص يسعى لتقديم أعمال مميزة.</p>
+      <p>نؤمن أن الدقة ليست قيداً بل أداة للحرية الإبداعية. كل مشروع يبدأ بالاستماع، ويمر بالبحث، وينتهي بتصميم يتجاوز توقعات العميل.</p>
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-num">0.01<em>mm</em></div><div class="stat-label">دقة التصميم</div></div>
+        <div class="stat"><div class="stat-num">100<em>%</em></div><div class="stat-label">شغف وتفاني</div></div>
+        <div class="stat"><div class="stat-num">2026</div><div class="stat-label">سنة الانطلاق</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">أفكار للاستكشاف</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+  <div class="services-preview-inner">
+    <div class="section-head">
+      <div>
+        <p class="section-label">ما نقدمه</p>
+        <h2>خدماتنا الأساسية</h2>
+      </div>
+      <a href="services_ar.html" class="btn-outline" style="white-space:nowrap;">كل الخدمات ←</a>
+    </div>
+    <div class="services-grid">
+      <a href="services_ar.html" class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V13L10 18L2 13V7L10 2Z" stroke="#38bdf8" stroke-width="1.2"/></svg>
+        </div>
+        <h3>تصوير المنتجات ثلاثي الأبعاد</h3>
+        <p>نماذج ثلاثية الأبعاد واقعية لمنتجاتك — مثالية للتجارة الإلكترونية والعروض التقديمية.</p>
+      </a>
+      <a href="services_ar.html" class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#38bdf8" stroke-width="1.2"/><path d="M10 3v7l4 4" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>ريندر إعلاني للمنتجات</h3>
+        <p>صور إعلانية احترافية بإضاءة سينمائية — مصممة للسوشيال ميديا والحملات التسويقية.</p>
+      </a>
+      <a href="services_ar.html" class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="#38bdf8" stroke-width="1.2"/><path d="M7 10h6M10 7v6" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>مشاهد إبداعية للمنتجات</h3>
+        <p>بيئات ثلاثية الأبعاد جريئة حول منتجك — فيجوالز لافتة تجعل علامتك التجارية لا تُنسى.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PORTFOLIO PREVIEW -->
+<section class="portfolio-preview">
+  <div class="portfolio-preview-inner">
+    <div class="section-head" style="direction:rtl;">
+      <div>
+        <p class="section-label">أعمالنا</p>
+        <h2>أحدث المشاريع</h2>
+      </div>
+      <a href="portfolio_ar.html" class="btn-outline" style="white-space:nowrap;">← كل الأعمال</a>
+    </div>
+    <div class="portfolio-preview-grid" id="portfolioPreview">
+      <!-- loaded from localStorage -->
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-content">
+    <p class="section-label">مستعد تبدأ؟</p>
+    <h2>خلينا نصنع شيئاً استثنائياً</h2>
+    <p>سواء عندك بريف تفصيلي أو فكرة في بالك، نحن هنا نسمعك ونطوّر معك اللي تستاهل.</p>
+    <div class="cta-btns">
+      <a href="contact_ar.html" class="btn-primary">تواصل معنا
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M7 13l-6-6 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="about_ar.html" class="btn-outline">من نحن</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Formixa<em>.</em>Studio</div>
+  <ul class="footer-links">
+    <li><a href="about_ar.html">من نحن</a></li>
+    <li><a href="services_ar.html">خدماتنا</a></li>
+    <li><a href="contact_ar.html">تواصل معنا</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Formixa Studio. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+    const h = document.getElementById('hamburger');
+  const n = document.getElementById('navLinks');
+  if (h && n) {
+    h.addEventListener('click', () => {
+      h.classList.toggle('open');
+      n.classList.toggle('open');
+    });
+    n.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        h.classList.remove('open');
+        n.classList.remove('open');
+      });
+    });
+  }
+</script>
+<script>
+(function() {
+  const STORAGE_KEY = 'formixa_portfolio_works';
+  const works = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  const grid = document.getElementById('portfolioPreview');
+  if (!grid) return;
+
+  function getYoutubeThumb(url) {
+    const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+    return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : '';
+  }
+
+  if (works.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--c-muted);border:1px dashed var(--c-border);border-radius:12px;direction:rtl;">
+        <p style="font-size:0.88rem;">لم تُضف أي أعمال بعد. <a href="portfolio-admin.html" style="color:var(--c-accent);">اذهب للوحة التحكم</a></p>
+      </div>`;
+    return;
+  }
+
+  works.slice(0, 3).forEach(w => {
+    let mediaHtml = '';
+    if (w.type === 'image')
+      mediaHtml = `<img src="${w.url}" alt="${w.title}" loading="lazy">`;
+    else if (w.type === 'video')
+      mediaHtml = `<video src="${w.url}" autoplay muted loop playsinline></video>`;
+    else if (w.type === 'youtube') {
+      const thumb = getYoutubeThumb(w.url);
+      mediaHtml = thumb ? `<img src="${thumb}" alt="${w.title}" loading="lazy">` : '';
+    }
+    if (!mediaHtml) {
+      mediaHtml = `<div class="preview-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.2"/></svg><span>${w.category}</span></div>`;
+    }
+    grid.innerHTML += `
+      <a href="portfolio_ar.html" class="preview-card">
+        <div class="preview-media">${mediaHtml}</div>
+        <div class="preview-info">
+          <span class="preview-tag">${w.category}</span>
+          <h3>${w.title}</h3>
+        </div>
+      </a>`;
+  });
+})();
+</script>
+</body>
+</html>
