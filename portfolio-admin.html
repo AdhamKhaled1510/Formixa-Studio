@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة الأعمال — Formixa Studio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body { min-height: 100vh; }
+
+/* LOGIN */
+.login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse 800px 600px at 50% 40%, #0a2a4a 0%, transparent 65%),
+              linear-gradient(180deg, #07090f 0%, #050d1a 100%);
+}
+.login-box {
+  width: 100%; max-width: 400px; padding: 3rem 2.5rem;
+  border: 1px solid var(--c-border); border-radius: 20px;
+  background: rgba(255,255,255,0.03); text-align: center;
+}
+.login-box .logo { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--c-text); }
+.login-box .logo em { font-style: normal; color: var(--c-accent); }
+.login-box p { color: var(--c-muted); font-size: 0.85rem; margin-bottom: 2rem; }
+.login-box input[type="password"] {
+  width: 100%; padding: 0.85rem 1.1rem; margin-bottom: 1rem;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--c-border);
+  border-radius: 12px; color: var(--c-text); font-size: 0.95rem;
+  font-family: var(--ff-body); outline: none; text-align: center;
+  transition: border-color 0.2s;
+}
+.login-box input[type="password"]:focus { border-color: var(--c-accent); }
+.login-box .btn-primary { width: 100%; justify-content: center; padding: 0.9rem; }
+.login-error { color: #f87171; font-size: 0.8rem; margin-top: 0.8rem; display: none; }
+
+/* ADMIN PANEL */
+.admin-panel { display: none; }
+.admin-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(7,9,15,0.95); border-bottom: 1px solid var(--c-border);
+  backdrop-filter: blur(20px);
+}
+.admin-nav .logo { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--c-text); }
+.admin-nav .logo em { font-style: normal; color: var(--c-accent); }
+.admin-badge {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--c-accent); background: rgba(56,189,248,0.1);
+  border: 1px solid rgba(56,189,248,0.25); padding: 3px 12px; border-radius: 100px;
+}
+.logout-btn { font-size: 0.78rem; color: var(--c-muted); background: none; border: none; cursor: pointer; font-family: var(--ff-body); transition: color 0.2s; }
+.logout-btn:hover { color: var(--c-text); }
+
+.admin-main { padding: 6rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
+.admin-header { margin-bottom: 2rem; }
+.admin-header h1 { font-family: var(--ff-display); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; }
+.admin-header p { color: var(--c-muted); font-size: 0.88rem; }
+
+/* ══ HOW IT WORKS GUIDE ══ */
+.how-it-works {
+  background: rgba(56,189,248,0.05);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 16px; padding: 1.75rem;
+  margin-bottom: 2rem; direction: rtl;
+}
+.how-it-works h3 {
+  font-family: var(--ff-display); font-size: 1rem; font-weight: 700;
+  color: var(--c-accent); margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.step-box {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--c-border);
+  border-radius: 12px; padding: 1.2rem;
+}
+.step-box .step-n { font-family: var(--ff-display); font-size: 1.8rem; font-weight: 800; color: rgba(56,189,248,0.2); line-height: 1; margin-bottom: 0.6rem; }
+.step-box h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--c-text); }
+.step-box p { font-size: 0.78rem; color: var(--c-muted); line-height: 1.7; }
+.step-box code { font-size: 0.72rem; color: var(--c-accent); background: rgba(56,189,248,0.1); padding: 1px 6px; border-radius: 4px; }
+
+/* ══ GIST CONFIG ══ */
+.gist-config {
+  background: rgba(99,102,241,0.05);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 16px; padding: 1.75rem;
+  margin-bottom: 2rem; direction: rtl;
+}
+.gist-config h3 { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: #818cf8; margin-bottom: 1rem; }
+.config-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.cfg-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.cfg-field label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-muted); }
+.cfg-field input {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+  border-radius: 10px; color: var(--c-text); font-family: var(--ff-body);
+  font-size: 0.85rem; padding: 0.65rem 0.9rem; outline: none; direction: ltr;
+  transition: border-color 0.2s;
+}
+.cfg-field input:focus { border-color: #818cf8; }
+.cfg-field input::placeholder { color: rgba(126,143,170,0.4); }
+.save-cfg-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.65rem 1.6rem; background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.35); color: #818cf8;
+  border-radius: 100px; cursor: pointer; font-size: 0.82rem;
+  font-family: var(--ff-body); font-weight: 500;
+  transition: background 0.2s, border-color 0.2s;
+}
+.save-cfg-btn:hover { background: rgba(99,102,241,0.25); border-color: #818cf8; }
+.cfg-status { font-size: 0.78rem; margin-top: 0.5rem; display: none; }
+.cfg-status.ok  { color: #34d399; display: block; }
+.cfg-status.err { color: #f87171; display: block; }
+
+/* ══ ADD FORM ══ */
+.add-form {
+  background: rgba(255,255,255,0.025); border: 1px solid var(--c-border);
+  border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem;
+}
+.add-form h2 { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--c-accent); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field label { font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-muted); }
+.field input[type="text"],
+.field input[type="url"],
+.field select,
+.field textarea {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+  border-radius: 10px; color: var(--c-text); font-family: var(--ff-body);
+  font-size: 0.88rem; padding: 0.7rem 0.9rem; outline: none;
+  transition: border-color 0.2s; width: 100%; direction: rtl;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--c-accent); }
+.field select option { background: #07090f; }
+.field textarea { min-height: 80px; resize: vertical; }
+
+/* URL input always LTR */
+.field input[type="url"], #mediaUrl { direction: ltr; text-align: left; }
+
+/* MEDIA INPUT */
+.upload-tabs {
+  display: flex; border: 1px solid var(--c-border); border-radius: 10px; overflow: hidden; margin-bottom: 0.6rem;
+}
+.upload-tab {
+  flex: 1; padding: 0.55rem; text-align: center; cursor: pointer;
+  font-size: 0.78rem; font-weight: 500; color: var(--c-muted);
+  background: transparent; border: none; font-family: var(--ff-body);
+  transition: all 0.2s; border-left: 1px solid var(--c-border);
+}
+.upload-tab:first-child { border-left: none; }
+.upload-tab.active { background: linear-gradient(130deg, rgba(14,165,233,0.18), rgba(99,102,241,0.18)); color: var(--c-accent); }
+
+/* GitHub URL panel */
+.github-panel {
+  border: 1.5px dashed rgba(56,189,248,0.3);
+  border-radius: 10px; padding: 1.25rem;
+  background: rgba(56,189,248,0.03);
+}
+.github-panel p { font-size: 0.8rem; color: var(--c-muted); margin-bottom: 0.75rem; line-height: 1.7; }
+.github-panel .url-input {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+  border-radius: 10px; color: var(--c-text); font-family: var(--ff-body);
+  font-size: 0.85rem; padding: 0.7rem 0.9rem; outline: none; width: 100%;
+  direction: ltr; transition: border-color 0.2s; margin-bottom: 0.5rem;
+}
+.github-panel .url-input:focus { border-color: var(--c-accent); }
+.github-tip { font-size: 0.72rem; color: var(--c-accent); opacity: 0.8; }
+
+/* YouTube panel */
+.youtube-panel .url-input {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+  border-radius: 10px; color: var(--c-text); font-family: var(--ff-body);
+  font-size: 0.85rem; padding: 0.7rem 0.9rem; outline: none; width: 100%;
+  direction: ltr; transition: border-color 0.2s; margin-top: 0.3rem;
+}
+.youtube-panel .url-input:focus { border-color: var(--c-accent); }
+
+/* Preview */
+.media-preview {
+  margin-top: 0.8rem; width: 100%; height: 150px; border-radius: 10px;
+  overflow: hidden; background: #0c0f1a; display: none;
+  border: 1px solid var(--c-border); position: relative;
+}
+.media-preview img, .media-preview video, .media-preview iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
+.clear-preview {
+  position: absolute; top: 8px; left: 8px;
+  background: rgba(0,0,0,0.75); border: none; color: #fff;
+  width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+  font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+}
+
+.add-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.75rem 2rem; background: linear-gradient(130deg,#0ea5e9,#6366f1);
+  color: #fff; font-family: var(--ff-body); font-size: 0.88rem; font-weight: 500;
+  border: none; border-radius: 100px; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 20px rgba(56,189,248,0.25);
+}
+.add-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 28px rgba(56,189,248,0.4); }
+.add-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* SYNC STATUS */
+.sync-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; padding: 4px 12px; border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+.sync-status.synced  { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); color: #34d399; }
+.sync-status.syncing { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); color: var(--c-accent); }
+.sync-status.offline { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #f87171; }
+.sync-status.noconfig { background: rgba(255,255,255,0.05); border: 1px solid var(--c-border); color: var(--c-muted); }
+.sync-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.sync-status.syncing .sync-dot { animation: pulse-dot 1s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* WORKS LIST */
+.works-list-section h2 { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 1.2rem; color: var(--c-accent); }
+.empty-state { text-align: center; padding: 3rem; color: var(--c-muted); border: 1px dashed var(--c-border); border-radius: 12px; font-size: 0.88rem; }
+.works-admin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.work-admin-card { border: 1px solid var(--c-border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); transition: border-color 0.2s; position: relative; }
+.work-admin-card:hover { border-color: var(--c-border-hover); }
+.work-admin-thumb { width: 100%; height: 160px; object-fit: cover; background: #0c0f1a; display: block; }
+.work-admin-thumb-video { width: 100%; height: 160px; object-fit: cover; display: block; }
+.work-admin-thumb-iframe { width: 100%; height: 160px; border: none; display: block; }
+.work-admin-thumb-placeholder { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #0c0f1a; color: var(--c-muted); font-size: 0.75rem; }
+.work-admin-info { padding: 0.9rem; }
+.work-admin-info h3 { font-family: var(--ff-display); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+.work-admin-info .tag { font-size: 0.65rem; color: var(--c-accent); text-transform: uppercase; letter-spacing: 0.1em; }
+.work-admin-actions { display: flex; gap: 0.5rem; padding: 0 0.9rem 0.9rem; }
+.del-btn { flex: 1; padding: 0.5rem; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: #f87171; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-family: var(--ff-body); transition: background 0.2s; }
+.del-btn:hover { background: rgba(248,113,113,0.2); }
+.move-btn { padding: 0.5rem 0.8rem; background: rgba(255,255,255,0.04); border: 1px solid var(--c-border); color: var(--c-muted); border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: var(--ff-body); transition: background 0.2s; }
+.move-btn:hover { background: rgba(255,255,255,0.08); color: var(--c-text); }
+
+.view-links { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+.view-link { display: inline-flex; align-items: center; gap: 6px; padding: 0.6rem 1.4rem; border: 1px solid var(--c-border); border-radius: 100px; color: var(--c-muted); font-size: 0.82rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+.view-link:hover { border-color: var(--c-accent); color: var(--c-text); }
+
+@media (max-width: 700px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .config-row { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .works-admin-grid { grid-template-columns: 1fr 1fr; }
+  .admin-main { padding: 5rem 1.2rem 3rem; }
+}
+@media (max-width: 480px) {
+  .works-admin-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="logo">Formixa<em>.</em>Studio</div>
+    <p>صفحة إدارة الأعمال — خاصة بك أنت فقط</p>
+    <input type="password" id="pwInput" placeholder="كلمة السر" onkeydown="if(event.key==='Enter') tryLogin()">
+    <button class="btn-primary" onclick="tryLogin()">
+      دخول
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M7 13l-6-6 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p class="login-error" id="loginError">❌ كلمة السر غلط، حاول تاني</p>
+  </div>
+</div>
+
+<!-- ══ ADMIN PANEL ══ -->
+<div class="admin-panel" id="adminPanel">
+
+  <div class="admin-nav">
+    <div class="logo">Formixa<em>.</em>Studio</div>
+    <span class="admin-badge">لوحة التحكم</span>
+    <button class="logout-btn" onclick="logout()">خروج ↩</button>
+  </div>
+
+  <div class="admin-main">
+    <div class="admin-header">
+      <h1>إدارة الأعمال</h1>
+      <p>أضف صورك عن طريق روابط GitHub — هتظهر تلقائياً على كل الأجهزة</p>
+    </div>
+
+    <!-- SYNC STATUS -->
+    <div class="sync-status noconfig" id="syncStatus">
+      <span class="sync-dot"></span>
+      <span id="syncText">جاري التحقق من الإعدادات...</span>
+    </div>
+
+    <!-- ══ HOW IT WORKS ══ -->
+    <div class="how-it-works">
+      <h3>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#38bdf8" stroke-width="1.2"/><path d="M8 5v3l2 2" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round"/></svg>
+        إزاي تضيف صور تظهر على كل الأجهزة؟
+      </h3>
+      <div class="steps-grid">
+        <div class="step-box">
+          <div class="step-n">01</div>
+          <h4>ارفع الصورة على GitHub</h4>
+          <p>افتح الـ repo بتاعك على GitHub ← ارفع صورك في فولدر <code>images/</code> ← افتح الصورة ← اضغط <code>Raw</code></p>
+        </div>
+        <div class="step-box">
+          <div class="step-n">02</div>
+          <h4>انسخ الرابط الـ Raw</h4>
+          <p>الرابط هيكون شكله:<br><code>raw.githubusercontent.com/username/repo/main/images/photo.jpg</code></p>
+        </div>
+        <div class="step-box">
+          <div class="step-n">03</div>
+          <h4>الصق الرابط هنا</h4>
+          <p>في خانة <code>رابط GitHub</code> تحت — اضغط معاينة وبعدين إضافة. الصورة هتظهر على كل الأجهزة فوراً ✓</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ GIST CONFIG ══ -->
+    <div class="gist-config">
+      <h3>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#818cf8" stroke-width="1.2"/><path d="M5 8h6M8 5v6" stroke="#818cf8" stroke-width="1.2" stroke-linecap="round"/></svg>
+        إعداد المزامنة بين الأجهزة (GitHub Gist)
+      </h3>
+      <p style="font-size:0.82rem;color:var(--c-muted);margin-bottom:1rem;line-height:1.75;">
+        عشان قائمة الأعمال تتزامن على كل الأجهزة، محتاج تعمل <strong style="color:var(--c-text);">GitHub Gist</strong> مرة واحدة بس:<br>
+        ١. روح على <a href="https://gist.github.com" target="_blank" style="color:var(--c-accent);">gist.github.com</a> ← اعمل Gist جديد (Secret) باسم <code style="color:var(--c-accent);">formixa-works.json</code> وحط فيه <code style="color:var(--c-accent);">[]</code><br>
+        ٢. من إعدادات حسابك على GitHub ← Developer Settings ← <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--c-accent);">Personal Access Tokens (classic)</a> ← اعمل token بصلاحية <code style="color:var(--c-accent);">gist</code><br>
+        ٣. الصق الـ Gist ID والـ Token تحت
+      </p>
+      <div class="config-row">
+        <div class="cfg-field">
+          <label>Gist ID</label>
+          <input type="text" id="cfgGistId" placeholder="abc123def456..." autocomplete="off">
+        </div>
+        <div class="cfg-field">
+          <label>GitHub Token (gist scope)</label>
+          <input type="password" id="cfgToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+        </div>
+      </div>
+      <button class="save-cfg-btn" onclick="saveConfig()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        حفظ وتحقق
+      </button>
+      <div class="cfg-status" id="cfgStatus"></div>
+    </div>
+
+    <!-- ADD FORM -->
+    <div class="add-form">
+      <h2>＋ إضافة عمل جديد</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>عنوان العمل</label>
+          <input type="text" id="workTitle" placeholder="مثال: ريندر منتج عطر">
+        </div>
+        <div class="field">
+          <label>التصنيف</label>
+          <select id="workCategory">
+            <option value="visualization">تصوير ثلاثي الأبعاد</option>
+            <option value="advertising">ريندر إعلاني</option>
+            <option value="scene">مشهد إبداعي</option>
+            <option value="video">فيديو / موشن</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- MEDIA TABS -->
+      <div class="field" style="margin-bottom:1rem;">
+        <label>الصورة أو الفيديو</label>
+        <div class="upload-tabs">
+          <button class="upload-tab active" onclick="switchTab('github')" id="tabGithub">🖼 رابط GitHub</button>
+          <button class="upload-tab" onclick="switchTab('url')"    id="tabUrl">🔗 رابط URL</button>
+          <button class="upload-tab" onclick="switchTab('youtube')" id="tabYoutube">▶ يوتيوب</button>
+        </div>
+
+        <!-- GITHUB TAB -->
+        <div id="panelGithub">
+          <div class="github-panel">
+            <p>ارفع الصورة على GitHub أولاً، بعدين انسخ رابط الـ <strong style="color:var(--c-text);">Raw</strong> والصقه هنا:</p>
+            <input type="url" class="url-input" id="githubUrl"
+              placeholder="https://raw.githubusercontent.com/username/repo/main/images/photo.jpg"
+              oninput="previewGithub()">
+            <span class="github-tip">✓ الصورة هتظهر على كل الأجهزة اللي فاتحة الموقع</span>
+          </div>
+        </div>
+
+        <!-- URL TAB -->
+        <div id="panelUrl" style="display:none;">
+          <input type="url" class="url-input" id="mediaUrl"
+            placeholder="https://example.com/image.jpg"
+            oninput="previewUrl()"
+            style="background:rgba(255,255,255,0.04);border:1px solid var(--c-border);border-radius:10px;color:var(--c-text);font-family:var(--ff-body);font-size:0.88rem;padding:0.7rem 0.9rem;outline:none;width:100%;margin-top:0.3rem;direction:ltr;">
+        </div>
+
+        <!-- YOUTUBE TAB -->
+        <div id="panelYoutube" class="youtube-panel" style="display:none;">
+          <input type="url" class="url-input" id="youtubeUrl"
+            placeholder="https://www.youtube.com/watch?v=..."
+            oninput="previewYoutube()">
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="media-preview" id="mediaPreview">
+          <button class="clear-preview" onclick="clearMedia()">✕</button>
+          <img id="previewImg" style="display:none;" alt="preview">
+          <video id="previewVid" style="display:none;" muted autoplay loop playsinline></video>
+          <iframe id="previewFrame" style="display:none;" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>الحجم في الـ Grid</label>
+          <select id="workSize">
+            <option value="">عادي</option>
+            <option value="tall">طويل (tall)</option>
+            <option value="wide">عريض (wide)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>وصف قصير (اختياري)</label>
+          <input type="text" id="workDesc" placeholder="وصف مختصر...">
+        </div>
+      </div>
+
+      <button class="add-btn" id="addBtn" onclick="addWork()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        إضافة للأعمال
+      </button>
+    </div>
+
+    <!-- WORKS LIST -->
+    <div class="works-list-section">
+      <h2>أعمالك الحالية (<span id="worksCount">0</span>)</h2>
+      <div id="worksAdminGrid" class="works-admin-grid"></div>
+      <div id="emptyState" class="empty-state">لسه مضفتش أي أعمال — ابدأ بإضافة أول عمل فوق ↑</div>
+    </div>
+
+    <div class="view-links">
+      <a href="portfolio.html" class="view-link" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        عرض Portfolio إنجليزي
+      </a>
+      <a href="portfolio_ar.html" class="view-link" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M7 13l-6-6 6-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        عرض Portfolio عربي
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ CONFIG ══
+const ADMIN_PASSWORD = 'formixa2026';
+const CFG_KEY        = 'fx_gist_cfg';
+const GIST_FILENAME  = 'formixa-works.json';
+
+let cfg      = { gistId: '', token: '' };
+let activeTab = 'github';
+let currentMedia = { type: null, url: null };
+
+// ══ LOGIN ══
+function tryLogin() {
+  if (document.getElementById('pwInput').value === ADMIN_PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    sessionStorage.setItem('fx_admin', '1');
+    loadConfig();
+    loadWorksFromGist();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+function logout() { sessionStorage.removeItem('fx_admin'); location.reload(); }
+if (sessionStorage.getItem('fx_admin') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  loadConfig();
+  loadWorksFromGist();
+}
+
+// ══ CONFIG ══
+function loadConfig() {
+  const saved = localStorage.getItem(CFG_KEY);
+  if (saved) {
+    cfg = JSON.parse(saved);
+    if (cfg.gistId) document.getElementById('cfgGistId').value = cfg.gistId;
+    if (cfg.token)  document.getElementById('cfgToken').value  = cfg.token;
+  }
+}
+
+function saveConfig() {
+  const gistId = document.getElementById('cfgGistId').value.trim();
+  const token  = document.getElementById('cfgToken').value.trim();
+  if (!gistId || !token) { showCfgStatus('من فضلك ادخل الـ Gist ID والـ Token', false); return; }
+  cfg = { gistId, token };
+  localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+  showCfgStatus('جاري التحقق...', null);
+  loadWorksFromGist(true);
+}
+
+function showCfgStatus(msg, ok) {
+  const el = document.getElementById('cfgStatus');
+  el.textContent = msg;
+  el.className = 'cfg-status ' + (ok === true ? 'ok' : ok === false ? 'err' : '');
+  el.style.display = 'block';
+}
+
+// ══ GIST API ══
+function gistHeaders() {
+  return {
+    'Authorization': 'token ' + cfg.token,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+  };
+}
+
+async function loadWorksFromGist(isConfigCheck = false) {
+  setSyncStatus('syncing', 'جاري المزامنة...');
+
+  if (!cfg.gistId || !cfg.token) {
+    setSyncStatus('noconfig', 'لم يتم إعداد المزامنة بعد — ابدأ بتهيئة GitHub Gist أعلاه');
+    renderAdminGrid([]);
+    return;
+  }
+
+  try {
+    const res  = await fetch(`https://api.github.com/gists/${cfg.gistId}`, { headers: gistHeaders() });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const raw  = data.files?.[GIST_FILENAME]?.content || '[]';
+    const works = JSON.parse(raw);
+    // Cache locally as backup
+    localStorage.setItem('fx_works_cache', JSON.stringify(works));
+    setSyncStatus('synced', 'متزامن ✓ — التغييرات تظهر على كل الأجهزة');
+    if (isConfigCheck) showCfgStatus('✓ الإعداد ناجح! الـ Gist شغال صح', true);
+    renderAdminGrid(works);
+  } catch (e) {
+    setSyncStatus('offline', 'تعذّر الاتصال بـ GitHub — تأكد من الـ Gist ID والـ Token');
+    if (isConfigCheck) showCfgStatus('✗ خطأ: ' + e.message + ' — تأكد من الـ Gist ID والـ Token', false);
+    // Fallback to cache
+    const cache = localStorage.getItem('fx_works_cache');
+    if (cache) renderAdminGrid(JSON.parse(cache));
+    else renderAdminGrid([]);
+  }
+}
+
+async function saveWorksToGist(works) {
+  if (!cfg.gistId || !cfg.token) {
+    // Fallback: save locally only
+    localStorage.setItem('fx_works_cache', JSON.stringify(works));
+    // Also save to old key so portfolio page can still read it if no gist
+    localStorage.setItem('formixa_portfolio_works', JSON.stringify(works));
+    return;
+  }
+  setSyncStatus('syncing', 'جاري الحفظ...');
+  try {
+    await fetch(`https://api.github.com/gists/${cfg.gistId}`, {
+      method: 'PATCH',
+      headers: gistHeaders(),
+      body: JSON.stringify({ files: { [GIST_FILENAME]: { content: JSON.stringify(works, null, 2) } } })
+    });
+    localStorage.setItem('fx_works_cache', JSON.stringify(works));
+    localStorage.setItem('formixa_portfolio_works', JSON.stringify(works));
+    setSyncStatus('synced', 'تم الحفظ وتزامن على كل الأجهزة ✓');
+  } catch (e) {
+    // Save locally as backup even if gist fails
+    localStorage.setItem('fx_works_cache', JSON.stringify(works));
+    localStorage.setItem('formixa_portfolio_works', JSON.stringify(works));
+    setSyncStatus('offline', 'حُفظ محلياً — تعذّر الرفع لـ GitHub');
+  }
+}
+
+function getWorksFromCache() {
+  return JSON.parse(localStorage.getItem('fx_works_cache') || localStorage.getItem('formixa_portfolio_works') || '[]');
+}
+
+function setSyncStatus(type, text) {
+  const el = document.getElementById('syncStatus');
+  el.className = 'sync-status ' + type;
+  document.getElementById('syncText').textContent = text;
+}
+
+// ══ TABS ══
+function switchTab(tab) {
+  activeTab = tab;
+  ['github','url','youtube'].forEach(t => {
+    const panelId = 'panel' + t.charAt(0).toUpperCase() + t.slice(1);
+    const tabId   = 'tab'   + t.charAt(0).toUpperCase() + t.slice(1);
+    document.getElementById(panelId).style.display = t === tab ? 'block' : 'none';
+    document.getElementById(tabId).classList.toggle('active', t === tab);
+  });
+  clearMedia();
+}
+
+// ══ PREVIEW ══
+function previewGithub() {
+  const url = document.getElementById('githubUrl').value.trim();
+  if (!url) { clearMedia(); return; }
+  const isVideo = /\.(mp4|webm|ogg)(\?|$)/i.test(url);
+  currentMedia = { type: isVideo ? 'video' : 'image', url };
+  showPreview(currentMedia.type, url);
+}
+function previewUrl() {
+  const url = document.getElementById('mediaUrl').value.trim();
+  if (!url) { clearMedia(); return; }
+  const isVideo = /\.(mp4|webm|ogg)(\?|$)/i.test(url);
+  currentMedia = { type: isVideo ? 'video' : 'image', url };
+  showPreview(currentMedia.type, url);
+}
+function previewYoutube() {
+  const url = document.getElementById('youtubeUrl').value.trim();
+  const id  = getYoutubeId(url);
+  if (!id) { clearMedia(); return; }
+  currentMedia = { type: 'youtube', url, embedUrl: `https://www.youtube.com/embed/${id}` };
+  showPreview('youtube', currentMedia.embedUrl);
+}
+function showPreview(type, url) {
+  const wrap = document.getElementById('mediaPreview');
+  const img  = document.getElementById('previewImg');
+  const vid  = document.getElementById('previewVid');
+  const frm  = document.getElementById('previewFrame');
+  img.style.display = 'none'; vid.style.display = 'none'; frm.style.display = 'none';
+  wrap.style.display = 'block';
+  if      (type === 'image')   { img.src = url; img.style.display = 'block'; }
+  else if (type === 'video')   { vid.src = url; vid.style.display = 'block'; }
+  else if (type === 'youtube') { frm.src = url; frm.style.display = 'block'; }
+}
+function clearMedia() {
+  currentMedia = { type: null, url: null };
+  document.getElementById('mediaPreview').style.display = 'none';
+  document.getElementById('previewImg').src   = '';
+  document.getElementById('previewVid').src   = '';
+  document.getElementById('previewFrame').src = '';
+  const ids = ['githubUrl','mediaUrl','youtubeUrl'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+}
+
+function getYoutubeId(url) {
+  const m = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+// ══ ADD WORK ══
+async function addWork() {
+  const title    = document.getElementById('workTitle').value.trim();
+  const category = document.getElementById('workCategory').value;
+  const size     = document.getElementById('workSize').value;
+  const desc     = document.getElementById('workDesc').value.trim();
+
+  if (!title) { alert('اكتب عنوان العمل'); return; }
+
+  let type, url, embedUrl;
+  if (activeTab === 'github' || activeTab === 'url') {
+    const inputId = activeTab === 'github' ? 'githubUrl' : 'mediaUrl';
+    url = document.getElementById(inputId).value.trim();
+    if (!url) { alert('أدخل الرابط أولاً'); return; }
+    type = /\.(mp4|webm|ogg)(\?|$)/i.test(url) ? 'video' : 'image';
+  } else if (activeTab === 'youtube') {
+    const ytUrl = document.getElementById('youtubeUrl').value.trim();
+    const vid   = getYoutubeId(ytUrl);
+    if (!vid) { alert('رابط يوتيوب مش صح'); return; }
+    type = 'youtube'; url = ytUrl; embedUrl = `https://www.youtube.com/embed/${vid}`;
+  }
+
+  const btn = document.getElementById('addBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الحفظ...';
+
+  const works = getWorksFromCache();
+  works.push({ id: Date.now(), title, category, type, url, embedUrl, desc, size });
+  await saveWorksToGist(works);
+  renderAdminGrid(works);
+
+  // Reset
+  document.getElementById('workTitle').value = '';
+  document.getElementById('workDesc').value  = '';
+  document.getElementById('workSize').value  = '';
+  clearMedia();
+  btn.disabled = false;
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg> إضافة للأعمال';
+}
+
+// ══ DELETE ══
+async function deleteWork(id) {
+  if (!confirm('تمسح العمل ده؟')) return;
+  const works = getWorksFromCache().filter(w => w.id !== id);
+  await saveWorksToGist(works);
+  renderAdminGrid(works);
+}
+
+// ══ MOVE ══
+async function moveWork(id, dir) {
+  const works = getWorksFromCache();
+  const idx = works.findIndex(w => w.id === id);
+  if (dir === 'up' && idx === 0) return;
+  if (dir === 'down' && idx === works.length - 1) return;
+  const swap = dir === 'up' ? idx - 1 : idx + 1;
+  [works[idx], works[swap]] = [works[swap], works[idx]];
+  await saveWorksToGist(works);
+  renderAdminGrid(works);
+}
+
+// ══ RENDER ══
+function renderAdminGrid(works) {
+  const grid  = document.getElementById('worksAdminGrid');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('worksCount').textContent = works.length;
+
+  if (works.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  const catLabels = {
+    visualization: 'تصوير ثلاثي الأبعاد',
+    advertising:   'ريندر إعلاني',
+    scene:         'مشهد إبداعي',
+    video:         'فيديو / موشن'
+  };
+
+  grid.innerHTML = works.map(w => {
+    let thumb = '';
+    if      (w.type === 'image')   thumb = `<img class="work-admin-thumb" src="${w.url}" loading="lazy" onerror="this.style.opacity='0.3'">`;
+    else if (w.type === 'video')   thumb = `<video class="work-admin-thumb-video" src="${w.url}" muted autoplay loop playsinline></video>`;
+    else if (w.type === 'youtube') thumb = `<iframe class="work-admin-thumb-iframe" src="${w.embedUrl}" allowfullscreen></iframe>`;
+    else                           thumb = `<div class="work-admin-thumb-placeholder">لا يوجد معاينة</div>`;
+
+    return `
+    <div class="work-admin-card">
+      ${thumb}
+      <div class="work-admin-info">
+        <h3>${w.title}</h3>
+        <span class="tag">${catLabels[w.category] || w.category}${w.size ? ' · ' + w.size : ''}</span>
+      </div>
+      <div class="work-admin-actions">
+        <button class="move-btn" onclick="moveWork(${w.id},'up')">↑</button>
+        <button class="move-btn" onclick="moveWork(${w.id},'down')">↓</button>
+        <button class="del-btn"  onclick="deleteWork(${w.id})">حذف</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+</script>
+<script src="animations.js"></script>
+</body>
+</html>
