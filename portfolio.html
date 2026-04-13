@@ -310,9 +310,8 @@ async function loadWorksRemote() {
 }
 
 function getWorks() {
-  return getWorksLocal();
+  return JSON.parse(localStorage.getItem('fx_works_cache') || '[]');
 }
-
 function getYoutubeId(url) {
   const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
   return match ? match[1] : null;
