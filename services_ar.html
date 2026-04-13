@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الخدمات — فورميكسا ستوديو</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.services-body { padding: 6rem 4rem; background: linear-gradient(180deg, #050d1a 0%, #07090f 100%); }
+.services-body-inner { max-width: 1100px; margin: 0 auto; }
+.services-full-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 5rem; }
+
+.service-full-card {
+  border: 1px solid var(--c-border); border-radius: var(--radius);
+  padding: 2.5rem; background: rgba(255,255,255,0.025);
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  display: flex; flex-direction: column; gap: 1.2rem; direction: rtl;
+}
+.service-full-card:hover { border-color: var(--c-border-hover); transform: translateY(-4px); background: rgba(56,189,248,0.04); }
+.service-full-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(56,189,248,0.2); }
+.ic-cyan   { background: linear-gradient(135deg,rgba(56,189,248,0.18),rgba(99,102,241,0.1)); }
+.ic-indigo { background: linear-gradient(135deg,rgba(99,102,241,0.22),rgba(56,189,248,0.1)); }
+.ic-sky    { background: linear-gradient(135deg,rgba(14,165,233,0.22),rgba(56,189,248,0.1)); }
+.service-full-card h3 { font-family: var(--ff-display); font-size: 1.15rem; font-weight: 700; }
+.service-full-card p { font-size: 0.92rem; color: var(--c-muted); line-height: 1.85; flex: 1; }
+.service-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.service-features li { font-size: 0.83rem; color: var(--c-muted); padding-right: 1.1rem; position: relative; }
+.service-features li::before { content: ''; position: absolute; right: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--c-accent); opacity: 0.6; }
+
+/* PROCESS */
+.process { padding: 6rem 4rem; background: var(--c-bg); }
+.process-inner { max-width: 1100px; margin: 0 auto; direction: rtl; }
+.process h2 { font-family: var(--ff-display); font-size: clamp(1.6rem,2.5vw,2.2rem); font-weight: 700; margin-bottom: 3rem; }
+.process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+.process-step { position: relative; padding: 2rem 0 2rem 2rem; }
+.process-step:not(:last-child)::after { content: ''; position: absolute; left: 0; top: 2.5rem; width: 1px; height: calc(100% - 4rem); background: linear-gradient(to bottom, var(--c-border), transparent); }
+.step-num { font-family: var(--ff-display); font-size: 3rem; font-weight: 800; color: rgba(56,189,248,0.15); letter-spacing: -0.05em; line-height: 1; margin-bottom: 1rem; }
+.process-step h3 { font-family: var(--ff-display); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+.process-step p { font-size: 0.84rem; color: var(--c-muted); line-height: 1.7; }
+
+/* PRICING */
+.pricing { padding: 6rem 4rem; background: linear-gradient(180deg, #07090f 0%, #050d1a 100%); }
+.pricing-inner { max-width: 1100px; margin: 0 auto; direction: rtl; }
+.pricing h2 { font-family: var(--ff-display); font-size: clamp(1.6rem,2.5vw,2.2rem); font-weight: 700; margin-bottom: 3rem; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.pricing-card { border: 1px solid var(--c-border); border-radius: var(--radius); padding: 2.5rem; background: rgba(255,255,255,0.025); display: flex; flex-direction: column; gap: 1.5rem; transition: transform 0.3s, border-color 0.3s; direction: rtl; }
+.pricing-card:hover { transform: translateY(-4px); border-color: var(--c-border-hover); }
+.pricing-card.featured { border-color: rgba(56,189,248,0.4); background: rgba(56,189,248,0.04); position: relative; }
+.featured-badge { position: absolute; top: -13px; right: 50%; transform: translateX(50%); background: linear-gradient(130deg,#0ea5e9,#6366f1); color: #fff; font-size: 0.72rem; font-weight: 500; padding: 4px 16px; border-radius: 100px; }
+.pricing-tier { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-accent); }
+.pricing-price { font-family: var(--ff-display); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+.pricing-price span { font-size: 1rem; font-weight: 400; color: var(--c-muted); }
+.pricing-egp { font-size: 0.82rem; color: var(--c-accent); margin-top: 4px; opacity: 0.8; }
+.pricing-desc { font-size: 0.88rem; color: var(--c-muted); line-height: 1.7; }
+.pricing-divider { height: 1px; background: var(--c-border); }
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.pricing-features li { font-size: 0.86rem; color: var(--c-muted); display: flex; gap: 8px; align-items: flex-start; flex-direction: row-reverse; }
+.pricing-features li::after { content: '✓'; color: var(--c-accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+.pricing-card .btn-primary, .pricing-card .btn-outline { text-align: center; justify-content: center; }
+
+@media (max-width: 900px) {
+  .services-body { padding: 5rem 2rem; }
+  .services-full-grid { grid-template-columns: 1fr; }
+  .process { padding: 5rem 2rem; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-step::after { display: none; }
+  .pricing { padding: 5rem 2rem; }
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 580px) {
+  .process-steps { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index_ar.html" class="logo">Formixa<em>.</em>Studio</a>
+    <ul class="nav-links" id="navLinks">
+    <li><a href="index_ar.html">الرئيسية</a></li>
+    <li><a href="about_ar.html">من نحن</a></li>
+    <li><a href="services_ar.html" class="active">خدماتنا</a></li>
+    <li><a href="portfolio_ar.html">أعمالنا</a></li>
+    <li><a href="contact_ar.html" class="nav-cta">تواصل معنا</a></li>
+    <li class="lang-switch-mobile" style="display:none;"><a href="services.html" class="lang-btn">EN</a><a href="#" class="lang-btn active">عربي</a></li>  </ul>
+    <div class="lang-switch">
+    <a href="services.html" class="lang-btn">EN</a>
+    <a href="#" class="lang-btn active">عربي</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-line"></div>
+  <div class="page-header-content reveal" style="direction:rtl;">
+    <div class="page-eyebrow">ما نقدمه</div>
+    <h1>خدمات مصممة لكل<br>احتياجاتك</h1>
+    <p>من النمذجة ثلاثية الأبعاد إلى الريندر الإعلاني الاحترافي — نقدم حلولاً متكاملة تناسب مشروعك.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="services-body">
+  <div class="services-body-inner">
+    <p class="section-label" style="margin-bottom:2.5rem; direction:rtl;">قدراتنا</p>
+    <div class="services-full-grid" data-stagger="0.12">
+      <div class="service-full-card">
+        <div class="service-full-icon ic-cyan">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="#38bdf8" stroke-width="1.2"/><path d="M11 2v18M2 7l9 4 9-4" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.5"/></svg>
+        </div>
+        <h3>تصوير المنتجات ثلاثي الأبعاد</h3>
+        <p>نماذج ثلاثية الأبعاد دقيقة وواقعية لمنتجاتك — مثالية للتجارة الإلكترونية والعروض التقديمية والكتالوجات الرقمية.</p>
+        <ul class="service-features">
+          <li>نمذجة تفصيلية عالية الجودة</li>
+          <li>تصميم الخامات والتكستشر</li>
+          <li>ريندر من زوايا متعددة</li>
+          <li>ملفات جاهزة للطباعة والتصنيع</li>
+        </ul>
+      </div>
+      <div class="service-full-card">
+        <div class="service-full-icon ic-indigo">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#6366f1" stroke-width="1.2"/><path d="M7 11a4 4 0 0 1 8 0" stroke="#6366f1" stroke-width="1.2" stroke-linecap="round"/><circle cx="11" cy="11" r="2" fill="rgba(99,102,241,0.3)" stroke="#6366f1" stroke-width="1"/></svg>
+        </div>
+        <h3>ريندر إعلاني للمنتجات</h3>
+        <p>صور جاهزة للحملات الإعلانية والسوشيال ميديا — إضاءة سينمائية وتكوين مثالي في كل مرة.</p>
+        <ul class="service-features">
+          <li>إضاءة استوديو واحترافية</li>
+          <li> صور بدقة(HD/4K)</li>
+          <li>صيغ مناسبة للسوشيال ميديا</li>
+          <li>تسليم سريع يناسب الحملات</li>
+        </ul>
+      </div>
+      <div class="service-full-card">
+        <div class="service-full-icon ic-sky">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#0ea5e9" stroke-width="1.2"/><path d="M7 11h8M11 7v8" stroke="#0ea5e9" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>مشاهد إبداعية للمنتجات</h3>
+        <p>بيئات ثلاثية الأبعاد مبتكرة حول منتجك — فيجوالز جريئة ولافتة تجعل علامتك التجارية لا تُنسى.</p>
+        <ul class="service-features">
+          <li>تصميم بيئة وخلفية مخصصة</li>
+          <li>ألوان تعبّر عن هوية علامتك</li>
+          <li>فيجوالز هيرو للصفحات والمتاجر</li>
+          <li>نسخ متحركة (موشن)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-inner">
+    <p class="section-label">كيف نعمل</p>
+    <h2>طريقة العمل</h2>
+    <div class="process-steps" data-stagger="0.1">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <h3>الاستماع</h3>
+        <p>نفهم احتياجاتك وأهدافك وتصورك للمشروع بشكل كامل.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <h3>التصور</h3>
+        <p>نضع مقترحات أولية ونتفق على الاتجاه الإبداعي المناسب.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <h3>التنفيذ</h3>
+        <p>نُنجز التصميم مع جولات تعديل منظمة بناءً على ملاحظاتك.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <h3>التسليم</h3>
+        <p>نسلّم الملفات بكل الصيغ المطلوبة مع الدعم اللازم.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="pricing-inner">
+    <p class="section-label">الأسعار</p>
+    <h2>أسعار واضحة وشفافة</h2>
+    <div class="pricing-grid" data-stagger="0.12">
+      <div class="pricing-card">
+        <div class="pricing-tier">الباقة الأساسية</div>
+        <div class="pricing-price">800<span> جنيه</span></div>
+        <div class="pricing-egp">≈ $80 دولار</div>
+        <p class="pricing-desc">مثالية للمنتجات البسيطة والمشاريع الصغيرة التي تبحث عن تصوير احترافي.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>منتج واحد</li>
+          <li>زاويتان للريندر</li>
+          <li>جودة عالية (HD)</li>
+          <li>تسليم خلال 14 أيام</li>
+        </ul>
+        <a href="contact_ar.html" class="btn-outline">ابدأ الآن</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="featured-badge">الأكثر طلباً</div>
+        <div class="pricing-tier">الباقة الاحترافية</div>
+        <div class="pricing-price">1500<span> جنيه</span></div>
+        <div class="pricing-egp">≈ $150 دولار</div>
+        <p class="pricing-desc">باقة إبداعية متكاملة للعلامات التجارية التي تريد ريندر سينمائي ومشاهد مبتكرة.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>حتى 3 منتجات</li>
+          <li>زوايا متعددة + مشهد</li>
+          <li>ريندر فوتوريالستيك (4K)</li>
+          <li>صيغ السوشيال ميديا</li>
+          <li>تسليم أولوية خلال 7 أيام</li>
+        </ul>
+        <a href="contact_ar.html" class="btn-primary">ابدأ الآن
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M7 13l-6-6 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">باقة مخصصة</div>
+        <div class="pricing-price">بالتفاهم</div>
+        <div class="pricing-egp">&nbsp;</div>
+        <p class="pricing-desc">للمشاريع الكبيرة أو المتعددة — نتفق على السعر حسب التفاصيل والمتطلبات.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>منتجات ومشاهد غير محدودة</li>
+          <li>تعديلات غير محدودة</li>
+          <li>باقة إعلانية كاملة</li>
+          <li>جدول تسليم مرن</li>
+          <li>دعم أولوي</li>
+        </ul>
+        <a href="contact_ar.html" class="btn-outline">تحدث معنا</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Formixa<em>.</em>Studio</div>
+  <ul class="footer-links">
+    <li><a href="about_ar.html">من نحن</a></li>
+    <li><a href="services_ar.html">خدماتنا</a></li>
+    <li><a href="portfolio_ar.html">أعمالنا</a></li>
+    <li><a href="contact_ar.html">تواصل معنا</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Formixa Studio. جميع الحقوق محفوظة.</p>
+</footer>
+<script src="animations.js"></script>
+</body>
+</html>

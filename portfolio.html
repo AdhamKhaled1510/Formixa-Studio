@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Formixa Studio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ══════════════════════════════════════════════
+   HOW TO ADD / EDIT YOUR WORK
+   ══════════════════════════════════════════════
+
+   1. IMAGES  → change src="YOUR_IMAGE.jpg"
+   2. VIDEOS  → change src="YOUR_VIDEO.mp4"
+   3. TITLE   → change the text inside <h3>
+   4. TAGS    → change the text inside <span class="work-tag">
+   5. ADD NEW CARD → copy any .work-card block and paste it
+
+   SUPPORTED: jpg · png · webp · gif · mp4 · webm · youtube
+   ══════════════════════════════════════════════ */
+
+/* ── FILTER BAR ── */
+.portfolio-header { padding: 6rem 4rem 3rem; background: linear-gradient(180deg,#050d1a 0%,#07090f 100%); }
+.portfolio-header-inner { max-width: 1200px; margin: 0 auto; }
+
+.filter-bar {
+  display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 2.5rem;
+}
+.filter-btn {
+  padding: 0.45rem 1.2rem; border-radius: 100px; border: 1px solid var(--c-border);
+  background: transparent; color: var(--c-muted); font-family: var(--ff-body);
+  font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--c-accent); color: var(--c-text); }
+.filter-btn.active {
+  background: linear-gradient(130deg,#0ea5e9,#6366f1);
+  border-color: transparent; color: #fff;
+}
+
+/* ── GRID ── */
+.portfolio-grid-section { padding: 3rem 4rem 6rem; background: #07090f; }
+.portfolio-grid-inner { max-width: 1200px; margin: 0 auto; }
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* ── CARD ── */
+.work-card {
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+.work-card:hover { border-color: var(--c-border-hover); transform: translateY(-5px); }
+
+/* card sizes */
+.work-card.tall   { grid-row: span 2; }
+.work-card.wide   { grid-column: span 2; }
+
+/* ── MEDIA WRAPPER ── */
+.work-media {
+  position: relative; width: 100%; overflow: hidden;
+  background: #0c0f1a;
+}
+.work-card:not(.tall) .work-media { height: 240px; }
+.work-card.tall .work-media       { height: 100%; min-height: 360px; }
+.work-card.wide .work-media       { height: 300px; }
+
+.work-media img,
+.work-media video {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+.work-card:hover .work-media img,
+.work-card:hover .work-media video { transform: scale(1.04); }
+
+/* placeholder when no media */
+.work-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center;
+  justify-content: center; flex-direction: column; gap: 0.8rem;
+  color: var(--c-muted);
+}
+.work-placeholder svg { opacity: 0.3; }
+.work-placeholder span { font-size: 0.75rem; opacity: 0.5; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* youtube embed */
+.work-media iframe {
+  width: 100%; height: 100%; border: none; display: block;
+}
+
+/* hover overlay */
+.work-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(7,9,15,0.85) 0%, transparent 55%);
+  opacity: 0; transition: opacity 0.3s;
+  display: flex; align-items: flex-end; padding: 1.5rem;
+}
+.work-card:hover .work-overlay { opacity: 1; }
+.overlay-view {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.4);
+  color: var(--c-accent); font-size: 0.75rem; font-weight: 500;
+  padding: 6px 14px; border-radius: 100px; backdrop-filter: blur(6px);
+}
+
+/* ── CARD INFO ── */
+.work-info { padding: 1.2rem 1.4rem 1.4rem; }
+.work-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.work-tag {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--c-accent); background: rgba(56,189,248,0.08);
+  padding: 3px 10px; border-radius: 100px;
+  border: 1px solid rgba(56,189,248,0.15);
+}
+.work-info h3 {
+  font-family: var(--ff-display); font-size: 1rem; font-weight: 600;
+  color: var(--c-text); margin-bottom: 0.35rem;
+}
+.work-info p { font-size: 0.82rem; color: var(--c-muted); line-height: 1.6; }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(7,9,15,0.96); backdrop-filter: blur(12px);
+  align-items: center; justify-content: center; padding: 2rem;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  max-width: 900px; width: 100%; position: relative;
+  animation: fadeUp 0.3s ease;
+}
+.lightbox-media { width: 100%; border-radius: 12px; overflow: hidden; background: #0c0f1a; }
+.lightbox-media img, .lightbox-media video { width: 100%; max-height: 75vh; object-fit: contain; display: block; }
+.lightbox-media iframe { width: 100%; height: 500px; border: none; }
+.lightbox-info { padding: 1.2rem 0 0; }
+.lightbox-info h3 { font-family: var(--ff-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+.lightbox-info p  { font-size: 0.88rem; color: var(--c-muted); }
+.lightbox-close {
+  position: absolute; top: -3rem; right: 0;
+  background: none; border: none; color: var(--c-muted);
+  font-size: 1.5rem; cursor: pointer; line-height: 1;
+  transition: color 0.2s;
+}
+.lightbox-close:hover { color: var(--c-text); }
+
+/* ── CTA ── */
+.portfolio-cta {
+  padding: 5rem 4rem; text-align: center;
+  background: linear-gradient(180deg,#07090f 0%,#060d1c 100%);
+  border-top: 1px solid var(--c-border);
+}
+.portfolio-cta h2 { font-family: var(--ff-display); font-size: clamp(1.6rem,3vw,2.4rem); font-weight: 700; margin-bottom: 1rem; }
+.portfolio-cta p { color: var(--c-muted); margin-bottom: 2rem; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .portfolio-header { padding: 7rem 2rem 2.5rem; }
+  .portfolio-grid-section { padding: 2rem 2rem 5rem; }
+  .works-grid { grid-template-columns: 1fr 1fr; }
+  .work-card.wide { grid-column: span 2; }
+  .portfolio-cta { padding: 4rem 2rem; }
+}
+@media (max-width: 580px) {
+  .works-grid { grid-template-columns: 1fr; }
+  .work-card.wide, .work-card.tall { grid-column: span 1; grid-row: span 1; }
+  .work-card .work-media, .work-card.tall .work-media, .work-card.wide .work-media { height: 220px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Formixa<em>.</em>Studio</a>
+    <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
+    <li class="lang-switch-mobile" style="display:none;"><a href="portfolio_ar.html" class="lang-btn">عربي</a><a href="#" class="lang-btn active">EN</a></li>  </ul>
+    <div class="lang-switch">
+    <a href="portfolio_ar.html" class="lang-btn">عربي</a>
+    <a href="#" class="lang-btn active">EN</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-line"></div>
+  <div class="page-header-content reveal">
+    <div class="page-eyebrow">Our Work</div>
+    <h1>Every Pixel.<br>Every Polygon.</h1>
+    <p>A showcase of 3D visualizations, product renders, and creative scenes built with precision and intent.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FILTER + GRID -->
+<div class="portfolio-header">
+  <div class="portfolio-header-inner">
+    <p class="section-label">Browse by category</p>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Work</button>
+      <button class="filter-btn" data-filter="visualization">3D Visualization</button>
+      <button class="filter-btn" data-filter="advertising">Advertising Renders</button>
+      <button class="filter-btn" data-filter="scene">Creative Scenes</button>
+      <button class="filter-btn" data-filter="video">Video / Motion</button>
+    </div>
+  </div>
+</div>
+
+<section class="portfolio-grid-section">
+  <div class="portfolio-grid-inner">
+    <div class="works-grid" id="worksGrid">
+      <!-- أعمالك بتتحمل تلقائياً من لوحة التحكم -->
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <div class="lightbox-media" id="lightboxMedia"></div>
+    <div class="lightbox-info">
+      <h3 id="lightboxTitle"></h3>
+      <p id="lightboxDesc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="portfolio-cta">
+  <p class="section-label">Like what you see?</p>
+  <h2>Let's Create Something Together</h2>
+  <p>Tell us about your project and we'll bring it to life.</p>
+  <a href="contact.html" class="btn-primary">Get in Touch
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-logo">Formixa<em>.</em>Studio</div>
+  <ul class="footer-links">
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Formixa Studio. All rights reserved.</p>
+</footer>
+
+<script>
+);
+    n.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h.classList.remove('open'); n.classList.remove('open'); }));
+  }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightboxMedia').innerHTML = '';
+    document.body.style.overflow = '';
+  }
+</script>
+
+<script>
+// ══ LOAD WORKS — Gist (all devices) + localStorage fallback ══
+const CFG_KEY        = 'fx_gist_cfg';
+const GIST_FILENAME  = 'formixa-works.json';
+const CACHE_KEY      = 'fx_works_cache';
+const LEGACY_KEY     = 'formixa_portfolio_works';
+
+function getCfg() {
+  try { return JSON.parse(localStorage.getItem(CFG_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+function getWorksLocal() {
+  return JSON.parse(localStorage.getItem(CACHE_KEY) || localStorage.getItem(LEGACY_KEY) || '[]');
+}
+
+async function loadWorksRemote() {
+  const cfg = getCfg();
+  if (!cfg.gistId || !cfg.token) return null;
+  try {
+    const res  = await fetch('https://api.github.com/gists/' + cfg.gistId, {
+      headers: { 'Authorization': 'token ' + cfg.token, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const raw  = data.files?.[GIST_FILENAME]?.content || null;
+    if (!raw) return null;
+    const works = JSON.parse(raw);
+    localStorage.setItem(CACHE_KEY, JSON.stringify(works));
+    return works;
+  } catch(e) { return null; }
+}
+
+function getWorks() {
+  return getWorksLocal();
+}
+
+function getYoutubeId(url) {
+  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+function renderPortfolio(filter = 'all') {
+  const works = getWorks();
+  const grid  = document.getElementById('worksGrid');
+
+  if (works.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--c-muted);border:1px dashed var(--c-border);border-radius:12px;">
+        <p style="font-size:0.9rem;">No work added yet. <a href="portfolio-admin.html" style="color:var(--c-accent);">Go to Admin</a></p>
+      </div>`;
+    return;
+  }
+
+  const filtered = filter === 'all' ? works : works.filter(w => w.category === filter);
+
+  grid.innerHTML = filtered.map(w => {
+    let media = '';
+    if (w.type === 'image')
+      media = `<img src="${w.url}" alt="${w.title}" loading="lazy">`;
+    else if (w.type === 'video')
+      media = `<video src="${w.url}" autoplay muted loop playsinline></video>`;
+    else if (w.type === 'youtube')
+      media = `<iframe src="https://www.youtube.com/embed/${getYoutubeId(w.url)||''}" allowfullscreen></iframe>`;
+
+    const sizeClass = w.size ? ` ${w.size}` : '';
+
+    return `
+    <div class="work-card${sizeClass}" data-category="${w.category}">
+      <div class="work-media">
+        ${media}
+        <div class="work-overlay">
+          <span class="overlay-view">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#38bdf8" stroke-width="1.2"/><path d="M5 7l2 2 2-2" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round"/></svg>
+            View
+          </span>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-tags"><span class="work-tag">${w.category}</span></div>
+        <h3>${w.title}</h3>
+        ${w.desc ? `<p>${w.desc}</p>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Re-attach lightbox listeners
+  attachLightbox();
+}
+
+function attachLightbox() {
+  document.querySelectorAll('.work-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const media  = card.querySelector('.work-media');
+      const title  = card.querySelector('h3').textContent;
+      const desc   = card.querySelector('p') ? card.querySelector('p').textContent : '';
+      const lbMedia = document.getElementById('lightboxMedia');
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('lightboxDesc').textContent  = desc;
+      const img = media.querySelector('img'), video = media.querySelector('video'), iframe = media.querySelector('iframe');
+      lbMedia.innerHTML = '';
+      if (img)    lbMedia.innerHTML = `<img src="${img.src}" alt="${title}">`;
+      else if (video)  lbMedia.innerHTML = `<video src="${video.src}" controls autoplay></video>`;
+      else if (iframe) lbMedia.innerHTML = `<iframe src="${iframe.src}" allowfullscreen></iframe>`;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPortfolio(btn.dataset.filter);
+  });
+});
+
+// Initial render — load from Gist first, fallback to local cache
+(async () => {
+  renderPortfolio(); // show local cache immediately
+  const remote = await loadWorksRemote();
+  if (remote !== null) renderPortfolio(); // re-render with updated data
+})();
+</script>
+
+<script src="animations.js"></script>
+</body>
+</html>
